@@ -1,8 +1,8 @@
 # Mind-Echo（数智心晴）
-[中文](README_CN.md) | [English](README.md)
+[简体中文](README_CN.md) | [English](README.md)
 
-[![Fudan University](https://img.shields.io)](https://www.fudan.edu.cn)
-
+[![Project](https://img.shields.io)](https://www.fudan.edu.cn)
+[![License](https://img.shields.io)](https://opensource.org)
 ## Project Introduction
 This project is based on the Fudan University Xiyuan Program, focusing on a series of studies regarding the quantitative psychological characteristics (anxiety and depression indices) of outpatients. This repository showcases our team's research process and achievements. Specifically:
 1. We shadowed a large number of patients in the ENT (Ear, Nose, and Throat) outpatient department of relevant hospitals and created the ZZHL Anxiety and Depression Doctor-Patient Dialogue Dataset Demo. The dataset contains 133 dialogues between patients and doctors in outpatient settings, covering both initial and follow-up consultations to achieve maximum scenario coverage. For every patient collected, they agreed to fill out the PHQ-9 and GAD-7 questionnaires to measure anxiety and depression indicators after the consultation. After data cleaning, we are open-sourcing this work, which is currently one of the few datasets in China related to psychological anxiety and depression indices in outpatient medical settings.
