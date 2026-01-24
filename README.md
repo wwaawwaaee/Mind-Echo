@@ -1,2 +1,5 @@
-# -
-复旦大学曦源项目，针对门诊患者的心理量化特征（焦虑抑郁指数）展开的一系列研究
+# Mind-Echo（数智心晴）
+[中文](README_CN.md) | [English](README.md)
+
+[![Fudan University](https://img.shields.io)](https://www.fudan.edu.cn)
+[![Xiyuan Program](https://img.shields.io)]()
