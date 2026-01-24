@@ -2,4 +2,6 @@
 [中文](README_CN.md) | [English](README.md)
 
 [![Fudan University](https://img.shields.io)](https://www.fudan.edu.cn)
-[![Xiyuan Program](https://img.shields.io)]()
+
+## Ethics & Privacy
+Data is anonymized and adheres to ethical standards.
