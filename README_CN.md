@@ -2,7 +2,8 @@
 
 [简体中文](README_CN.md) | [English](README.md)
 
-[![Fudan University](https://img.shields.io)](https://www.fudan.edu.cn)
+[![Project](https://img.shields.io)](https://www.fudan.edu.cn)
+[![License](https://img.shields.io)](https://opensource.org)
 
 ## 项目简介
 本项目依托于复旦大学“曦源项目”，针对门诊患者的心理量化特征（焦虑抑郁指数）展开了一系列研究，本仓库展示了我们团队的研究过程以及得到的成果，具体来说：
