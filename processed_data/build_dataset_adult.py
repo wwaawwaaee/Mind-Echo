@@ -114,14 +114,14 @@ def build_patient_json(dialogue_path: Path, score_path: Path):
 
 
 def main():
-    dialogue_path = Path("raw_data/dialogues/41江凤敏耳鸣.txt")
+    dialogue_path = Path("raw_data/dialogues/41江凤敏.txt")
     score_path = Path("raw_data/diagram/score.csv")
 
     data = build_patient_json(dialogue_path, score_path)
 
-    out_path = Path("processed_data/patient_41.json")
+    out_path = Path("processed_data/output/patient_41.json")
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Wrote {out_path}")
+    print(f"Wrote in {out_path}")
 
 
 if __name__ == "__main__":
