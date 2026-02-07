@@ -4,6 +4,75 @@ from pathlib import Path
 import pandas as pd
 
 
+def _split_visits(content: str):
+    lines = content.splitlines()
+    segments = []
+    current = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("（") and stripped.endswith("）"):
+            if current:
+                segments.append("\n".join(current).strip())
+                current = []
+            continue
+        if stripped.startswith("(") and stripped.endswith(")"):
+            if current:
+                segments.append("\n".join(current).strip())
+                current = []
+            continue
+        current.append(line)
+    if current:
+        segments.append("\n".join(current).strip())
+    return [s for s in segments if s]
+
+
+def _parse_turns(content: str):
+    turns = []
+    current_role = None
+    current_note = None
+    buffer = []
+
+    def flush():
+        nonlocal buffer, current_role, current_note
+        if current_role and buffer:
+            text = "".join(buffer).strip()
+            if text:
+                turn = {"role": current_role, "text": text}
+                if current_note:
+                    turn["speaker_note"] = current_note
+                turns.append(turn)
+        buffer = []
+        current_role = None
+        current_note = None
+
+    for line in content.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        m = re.match(r"^【([^】]+)】[:：]?(.*)$", line)
+        if m:
+            flush()
+            raw_role = m.group(1)
+            text = m.group(2).strip()
+            note = None
+            role = "other"
+            if raw_role.startswith("D"):
+                role = "doctor"
+            elif raw_role.startswith("P"):
+                role = "adult_patient"
+                if "（" in raw_role and "）" in raw_role:
+                    note = raw_role.split("（", 1)[1].split("）", 1)[0]
+            current_role = role
+            current_note = note
+            if text:
+                buffer.append(text)
+            continue
+        if current_role:
+            buffer.append(line)
+    flush()
+    return turns
+
+
 def parse_dialogue(path: Path):
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -34,12 +103,15 @@ def parse_dialogue(path: Path):
     if start == -1:
         start = text.find("【P】")
     content = text[start:].strip() if start != -1 else text.strip()
+    visit_contents = _split_visits(content)
+    visit_turns = [_parse_turns(vc) for vc in visit_contents]
 
     return {
         "visit_time_raw": first_line,
         "visit_time": visit_time,
         "keywords": keywords,
-        "content": content,
+        "visit_contents": visit_contents,
+        "visit_turns": visit_turns,
     }
 
 
@@ -82,6 +154,21 @@ def build_patient_json(dialogue_path: Path, score_path: Path):
 
     dialogue = parse_dialogue(dialogue_path)
     scales = parse_scales(score_path, ids)
+    visits = []
+    for i, visit_content in enumerate(dialogue["visit_contents"]):
+        visits.append(
+            {
+                "visit_id": f"V-{ids[0]:06d}-{i+1}",
+                "visit_time": dialogue["visit_time"] if i == 0 else None,
+                "visit_time_raw": dialogue["visit_time_raw"] if i == 0 else None,
+                "dialogue": {
+                    "source_file": dialogue_path.name,
+                    "keywords": dialogue["keywords"],
+                    "content": visit_content,
+                    "turns": dialogue["visit_turns"][i] if i < len(dialogue["visit_turns"]) else [],
+                },
+            }
+        )
 
     data = {
         "dataset_meta": {
@@ -93,19 +180,8 @@ def build_patient_json(dialogue_path: Path, score_path: Path):
                 "patient_id": f"P-{ids[0]:06d}",
                 "name": name,
                 "age_group": "adult",
-                "visits": [
-                    {
-                        "visit_id": f"V-{ids[0]:06d}-1",
-                        "visit_time": dialogue["visit_time"],
-                        "visit_time_raw": dialogue["visit_time_raw"],
-                        "dialogue": {
-                            "source_file": dialogue_path.name,
-                            "keywords": dialogue["keywords"],
-                            "content": dialogue["content"],
-                        },
-                        "scales": scales,
-                    }
-                ],
+                "scales": scales,
+                "visits": visits,
             }
         ],
     }
