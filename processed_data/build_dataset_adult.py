@@ -195,7 +195,7 @@ def main():
 
     data = build_patient_json(dialogue_path, score_path)
 
-    out_path = Path("processed_data/output/patient_41.json")
+    out_path = Path("processed_data/output/adults/patient_41.json")
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Wrote in {out_path}")
 
