@@ -1,4 +1,4 @@
-import re
+﻿import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -7,6 +7,9 @@ TARGET_DIRS = [
     Path("raw_data/dialogues/hezhaoheng"),
     Path("raw_data/dialogues/zhouxiaoyv"),
 ]
+
+RANGE_START = 1
+RANGE_END = 133
 
 
 def extract_prefix_ids(stem: str) -> list[int]:
@@ -81,11 +84,21 @@ def print_overall(all_stats: list[dict]) -> None:
     all_ids = []
     for stats in all_stats:
         all_ids.extend(stats["unique_prefix_ids"])
+
     all_unique = sorted(set(all_ids))
+    expected_set = set(range(RANGE_START, RANGE_END + 1))
+    missing_ids = sorted(expected_set - set(all_unique))
+
     print("总体汇总")
     print(f"两个目录合并后去重编号数: {len(all_unique)}")
     print("合并去重编号列表:")
     print(", ".join(str(x) for x in all_unique))
+
+    print(f"{RANGE_START}到{RANGE_END}中缺少的编号:")
+    if missing_ids:
+        print(", ".join(str(x) for x in missing_ids))
+    else:
+        print("无")
 
 
 def main() -> None:
