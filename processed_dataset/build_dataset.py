@@ -262,9 +262,9 @@ def build_dataset(dialogue_root: Path, score_path: Path): #处理全部.txt文�
 
 
 def main():
-    dialogue_root = Path("processed_data/anonymized_dialogues")
+    dialogue_root = Path("processed_dataset/anonymized_dialogues")
     score_path = Path("raw_data/diagram/score.csv")
-    output_path = Path("processed_data/output/anonymized_dataset.json")
+    output_path = Path("processed_dataset/output/anonymized_dataset.json")
 
     dataset = build_dataset(dialogue_root, score_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
