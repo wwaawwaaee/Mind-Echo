@@ -9,18 +9,36 @@ def _split_visits(content: str):
     lines = content.splitlines()
     segments = []
     current = []
+
+    def flush_segment():
+        nonlocal current
+        if current:
+            segments.append("\n".join(current).strip())
+            current = []
+
     for line in lines:
         stripped = line.strip()
+        if stripped in {"OUT", "出去"}:
+            flush_segment()
+            continue
+        if "OUT" in stripped:
+            # Support inline separators, e.g. "好OUT" or "OUT好"
+            parts = stripped.split("OUT")
+            head = parts[0].strip()
+            if head:
+                current.append(head)
+            flush_segment()
+            tail = "OUT".join(parts[1:]).strip()
+            if tail:
+                current.append(tail)
+            continue
         if (stripped.startswith("（") and stripped.endswith("）")) or (
             stripped.startswith("(") and stripped.endswith(")")
         ):
-            if current:
-                segments.append("\n".join(current).strip())
-                current = []
+            flush_segment()
             continue
         current.append(line)
-    if current:
-        segments.append("\n".join(current).strip())
+    flush_segment()
     return [s for s in segments if s]
 
 
@@ -97,11 +115,7 @@ def parse_dialogue(path: Path):
     text = path.read_text(encoding="utf-8")
     keywords, body = _extract_keywords_and_body(text)
 
-    start = body.find("【D】")
-    if start == -1:
-        start = body.find("[医生]")
-    if start == -1:
-        start = body.find("【P】")
+    start = body.find("[医生]")
 
     content = body[start:].strip() if start != -1 else body.strip()
     visit_contents = _split_visits(content)
