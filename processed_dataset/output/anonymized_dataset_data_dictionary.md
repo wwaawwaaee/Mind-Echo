@@ -6,9 +6,9 @@
 
 | 项 | 值 |
 |---|---|
-| 数据集文件 | `processed_data/output/anonymized_dataset.json` |
-| 生成脚本 | `processed_data/build_dataset_adult.py` |
-| 对话来源 | `processed_data/anonymized_dialogues/**/*.txt` |
+| 数据集文件 | `processed_dataset/output/anonymized_dataset.json` |
+| 生成脚本 | `processed_dataset/build_dataset.py` |
+| 对话来源 | `processed_dataset/anonymized_dialogues/**/*.txt` |
 | 量表来源 | `raw_data/diagram/score.csv` |
 | 组织方式 | 患者中心（patient-centered） |
 | Schema 版本 | `0.2` |
@@ -52,7 +52,6 @@ root
       ├─ visit_id
       └─ dialogue
          ├─ source_file
-         ├─ content
          └─ turns[]
             ├─ role
             ├─ text
@@ -69,7 +68,7 @@ root
 |---|---|---|---|---|
 | `schema_version` | string | 是 | 结构版本 | `"0.2"` |
 | `patient_centered` | bool | 是 | 是否患者中心 | `true` |
-| `source_dir` | string | 是 | 对话源目录 | `"processed_data\\anonymized_dialogues"` |
+| `source_dir` | string | 是 | 对话源目录 | `"processed_dataset\\anonymized_dialogues"` |
 | `date_processing` | string | 是 | 日期处理策略 | `"disabled"` |
 
 ### 4.2 `stats`
@@ -128,7 +127,6 @@ root
 | 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `source_file` | string | 是 | 原始文件名 |
-| `content` | string | 是 | 当前 visit 原文 |
 | `turns` | array<object> | 是 | 结构化轮次 |
 
 ### 7.3 Turn
@@ -147,6 +145,10 @@ root
 - 同一文件中多家庭成员对话，当前不拆成多个患者对象。
 - 量表填写者身份（本人/家长）当前未自动判别。
 
-## 9. 演进建议
+## 9. 数据排序规则
+- `patients` 在输出时按 `patient_id` 从小到大排序。
+- `split_by_caregiver.py` 生成的两个子数据集也按 `patient_id` 从小到大排序。
+
+## 10. 演进建议
 1. 增加编码回退读取（`utf-8` -> `gb18030`）并输出质量标志。  
 2. 增加 `patient_type`（如 `adult`、`child_with_caregiver`）。  

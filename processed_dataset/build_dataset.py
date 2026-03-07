@@ -188,13 +188,12 @@ def build_patient(dialogue_path: Path, score_df: pd.DataFrame): #返回患者类
     scales = parse_scales(score_df, ids)
 
     visits = []
-    for i, visit_content in enumerate(dialogue["visit_contents"]):
+    for i, _visit_content in enumerate(dialogue["visit_contents"]):
         visits.append(
             {
                 "visit_id": f"V-{ids[0]:06d}-{i+1}",
                 "dialogue": {
                     "source_file": dialogue_path.name,
-                    "content": visit_content,
                     "turns": dialogue["visit_turns"][i] if i < len(dialogue["visit_turns"]) else [],
                 },
             }
@@ -249,6 +248,8 @@ def build_dataset(dialogue_root: Path, score_path: Path): #处理全部.txt文�
         except Exception as exc:
             stats["failed_files"] += 1
             stats["errors"].append({"file": str(path), "error": str(exc)})
+
+    patients.sort(key=lambda p: int(str(p.get("patient_id", "P-0")).split("-")[-1]))
 
     return {
         "dataset_meta": {
