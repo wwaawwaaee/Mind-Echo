@@ -6,13 +6,12 @@
 
 | 项 | 值 |
 |---|---|
-| 数据集文件 | `processed_data/output/anonymized_dataset.json` |
-| 生成脚本 | `processed_data/build_dataset_adult.py` |
-| 对话来源 | `processed_data/anonymized_dialogues/**/*.txt` |
+| 数据集文件 | `processed_dataset/output/anonymized_dataset.json` |
+| 生成脚本 | `processed_dataset/build_dataset.py` |
+| 对话来源 | `processed_dataset/anonymized_dialogues/**/*.txt` |
 | 量表来源 | `raw_data/diagram/score.csv` |
 | 组织方式 | 患者中心（patient-centered） |
 | Schema 版本 | `0.2` |
-| 日期处理 | 关闭（`date_processing=disabled`） |
 
 本数据集用于门诊心理相关对话与量表联合研究，支持：
 - 患者级建模（患者画像、量表与纵向就诊）
@@ -53,7 +52,6 @@ root
       ├─ visit_id
       └─ dialogue
          ├─ source_file
-         ├─ content
          └─ turns[]
             ├─ role
             ├─ text
@@ -70,7 +68,7 @@ root
 |---|---|---|---|---|
 | `schema_version` | string | 是 | 结构版本 | `"0.2"` |
 | `patient_centered` | bool | 是 | 是否患者中心 | `true` |
-| `source_dir` | string | 是 | 对话源目录 | `"processed_data\\anonymized_dialogues"` |
+| `source_dir` | string | 是 | 对话源目录 | `"processed_dataset\\anonymized_dialogues"` |
 | `date_processing` | string | 是 | 日期处理策略 | `"disabled"` |
 
 ### 4.2 `stats`
@@ -129,7 +127,6 @@ root
 | 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
 | `source_file` | string | 是 | 原始文件名 |
-| `content` | string | 是 | 当前 visit 原文 |
 | `turns` | array<object> | 是 | 结构化轮次 |
 
 ### 7.3 Turn
@@ -142,41 +139,16 @@ root
 
 角色取值：`doctor` / `caregiver` / `patient` / `other`
 
----
 
-## 8. 解析规则
-
-### 8.1 文件名解析
-基础模式：`^(\d+(?:，\d+)*)\s*(.+)$`
-
-元数据提取优先级：
-1. `姓名 性别 年龄岁`（或 `姓名 性别 年龄`）
-2. `姓名 性别`
-3. 回退：尾部整体作为 `name`
-
-### 8.2 关键词提取
-- 匹配：`关键词:` 或 `关键词：`
-- 分隔符：`、`、`，`
-- 提取后写入患者级 `keywords`
-
-### 8.3 Visit 切分
-以下任一情况会切分新 visit：
-- 单独一行：`（...）`
-- 单独一行：`(...)`
-- 单独一行：`OUT`
-- 单独一行：`出去`
-
-### 8.4 Speaker 解析
-支持 `【...】` 与 `[...]` 两种标签。
-
----
-
-## 9. 已知限制
+## 8. 限制
 - 部分源文本存在历史编码问题，可能出现乱码，结构可转但文本质量受影响。
 - 同一文件中多家庭成员对话，当前不拆成多个患者对象。
 - 量表填写者身份（本人/家长）当前未自动判别。
 
+## 9. 数据排序规则
+- `patients` 在输出时按 `patient_id` 从小到大排序。
+- `split_by_caregiver.py` 生成的两个子数据集也按 `patient_id` 从小到大排序。
+
 ## 10. 演进建议
 1. 增加编码回退读取（`utf-8` -> `gb18030`）并输出质量标志。  
 2. 增加 `patient_type`（如 `adult`、`child_with_caregiver`）。  
-3. 增加 `scale_visit_link`（量表记录到 visit 的可选关联）。

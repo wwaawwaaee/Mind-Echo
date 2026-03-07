@@ -9,18 +9,36 @@ def _split_visits(content: str):
     lines = content.splitlines()
     segments = []
     current = []
+
+    def flush_segment():
+        nonlocal current
+        if current:
+            segments.append("\n".join(current).strip())
+            current = []
+
     for line in lines:
         stripped = line.strip()
+        if stripped in {"OUT", "出去"}:
+            flush_segment()
+            continue
+        if "OUT" in stripped:
+            # Support inline separators, e.g. "好OUT" or "OUT好"
+            parts = stripped.split("OUT")
+            head = parts[0].strip()
+            if head:
+                current.append(head)
+            flush_segment()
+            tail = "OUT".join(parts[1:]).strip()
+            if tail:
+                current.append(tail)
+            continue
         if (stripped.startswith("（") and stripped.endswith("）")) or (
             stripped.startswith("(") and stripped.endswith(")")
         ):
-            if current:
-                segments.append("\n".join(current).strip())
-                current = []
+            flush_segment()
             continue
         current.append(line)
-    if current:
-        segments.append("\n".join(current).strip())
+    flush_segment()
     return [s for s in segments if s]
 
 
@@ -97,11 +115,7 @@ def parse_dialogue(path: Path):
     text = path.read_text(encoding="utf-8")
     keywords, body = _extract_keywords_and_body(text)
 
-    start = body.find("【D】")
-    if start == -1:
-        start = body.find("[医生]")
-    if start == -1:
-        start = body.find("【P】")
+    start = body.find("[医生]")
 
     content = body[start:].strip() if start != -1 else body.strip()
     visit_contents = _split_visits(content)
@@ -174,13 +188,12 @@ def build_patient(dialogue_path: Path, score_df: pd.DataFrame): #返回患者类
     scales = parse_scales(score_df, ids)
 
     visits = []
-    for i, visit_content in enumerate(dialogue["visit_contents"]):
+    for i, _visit_content in enumerate(dialogue["visit_contents"]):
         visits.append(
             {
                 "visit_id": f"V-{ids[0]:06d}-{i+1}",
                 "dialogue": {
                     "source_file": dialogue_path.name,
-                    "content": visit_content,
                     "turns": dialogue["visit_turns"][i] if i < len(dialogue["visit_turns"]) else [],
                 },
             }
@@ -236,6 +249,8 @@ def build_dataset(dialogue_root: Path, score_path: Path): #处理全部.txt文�
             stats["failed_files"] += 1
             stats["errors"].append({"file": str(path), "error": str(exc)})
 
+    patients.sort(key=lambda p: int(str(p.get("patient_id", "P-0")).split("-")[-1]))
+
     return {
         "dataset_meta": {
             "schema_version": "0.2",
@@ -248,9 +263,9 @@ def build_dataset(dialogue_root: Path, score_path: Path): #处理全部.txt文�
 
 
 def main():
-    dialogue_root = Path("processed_data/anonymized_dialogues")
+    dialogue_root = Path("processed_dataset/anonymized_dialogues")
     score_path = Path("raw_data/diagram/score.csv")
-    output_path = Path("processed_data/output/anonymized_dataset.json")
+    output_path = Path("processed_dataset/output/anonymized_dataset.json")
 
     dataset = build_dataset(dialogue_root, score_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
