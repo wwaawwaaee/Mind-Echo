@@ -1,2 +1,4 @@
 raw_data
 *.json
+paddleocr_config.py
+ocr_results
