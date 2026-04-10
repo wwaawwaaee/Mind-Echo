@@ -1,0 +1,94 @@
+{
+  "with_caregiver": {
+    "n_patients": 63,
+    "gad_distribution": {
+      "levels": {
+        "none": 0,
+        "mild": 18,
+        "moderate": 33,
+        "severe": 8,
+        "moderate_severe": 0
+      },
+      "total": 63,
+      "percentages": {
+        "none": 0.0,
+        "mild": 28.6,
+        "moderate": 52.4,
+        "severe": 12.7,
+        "moderate_severe": 0.0
+      }
+    },
+    "phq_distribution": {
+      "levels": {
+        "none": 0,
+        "mild": 7,
+        "moderate": 35,
+        "severe": 2,
+        "moderate_severe": 0
+      },
+      "total": 63,
+      "percentages": {
+        "none": 0.0,
+        "mild": 11.1,
+        "moderate": 55.6,
+        "severe": 3.2,
+        "moderate_severe": 0.0
+      }
+    },
+    "moderate_severe_anxiety_pct": 65.1,
+    "moderate_severe_depression_pct": 58.800000000000004,
+    "gad_phq_correlation": {
+      "pearson_r": 0.7045,
+      "pearson_p": 0.0,
+      "spearman_r": 0.709,
+      "spearman_p": 0.0,
+      "n": 63
+    }
+  },
+  "without_caregiver": {
+    "n_patients": 21,
+    "gad_distribution": {
+      "levels": {
+        "none": 0,
+        "mild": 5,
+        "moderate": 11,
+        "severe": 4,
+        "moderate_severe": 0
+      },
+      "total": 21,
+      "percentages": {
+        "none": 0.0,
+        "mild": 23.8,
+        "moderate": 52.4,
+        "severe": 19.0,
+        "moderate_severe": 0.0
+      }
+    },
+    "phq_distribution": {
+      "levels": {
+        "none": 0,
+        "mild": 4,
+        "moderate": 7,
+        "severe": 1,
+        "moderate_severe": 0
+      },
+      "total": 21,
+      "percentages": {
+        "none": 0.0,
+        "mild": 19.0,
+        "moderate": 33.3,
+        "severe": 4.8,
+        "moderate_severe": 0.0
+      }
+    },
+    "moderate_severe_anxiety_pct": 71.4,
+    "moderate_severe_depression_pct": 38.099999999999994,
+    "gad_phq_correlation": {
+      "pearson_r": 0.8743,
+      "pearson_p": 0.0,
+      "spearman_r": 0.7836,
+      "spearman_p": 0.0,
+      "n": 21
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "metric_definitions": {
+    "base.patient_count": "患者总人数（patients 数组长度）",
+    "base.patients_with_keywords": "包含 keywords 字段且非空的患者数",
+    "base.patients_with_scales": "包含 scales 字段且非空的患者数",
+    "demographics.gender_distribution": "患者性别分布；缺失记为 unknown",
+    "demographics.age_distribution.age_stats.count": "有有效年龄（int）的患者数",
+    "demographics.age_distribution.age_stats.mean": "有效年龄均值",
+    "demographics.age_distribution.age_stats.median": "有效年龄中位数",
+    "demographics.age_distribution.age_stats.min": "有效年龄最小值",
+    "demographics.age_distribution.age_stats.max": "有效年龄最大值",
+    "demographics.age_distribution.age_buckets": "年龄分段计数（0-12, 13-17, 18-44, 45-59, 60+, unknown）",
+    "visits_and_dialogue.visits_per_patient.count": "患者数（用于就诊次数统计）",
+    "visits_and_dialogue.visits_per_patient.mean": "每位患者平均就诊次数",
+    "visits_and_dialogue.visits_per_patient.median": "每位患者就诊次数中位数",
+    "visits_and_dialogue.visits_per_patient.min": "单个患者最少就诊次数",
+    "visits_and_dialogue.visits_per_patient.max": "单个患者最多就诊次数",
+    "visits_and_dialogue.turns_per_visit.count": "visit 总数（用于轮次数统计）",
+    "visits_and_dialogue.turns_per_visit.mean": "每次就诊平均轮次数",
+    "visits_and_dialogue.turns_per_visit.median": "每次就诊轮次数中位数",
+    "visits_and_dialogue.turns_per_visit.min": "单次就诊最少轮次数",
+    "visits_and_dialogue.turns_per_visit.max": "单次就诊最多轮次数",
+    "visits_and_dialogue.turn_role_distribution": "所有轮次中各角色占比计数（doctor/patient/caregiver/other）",
+    "scales.gad7_total.count": "有有效 GAD-7 总分的量表条目数",
+    "scales.gad7_total.mean": "GAD-7 总分均值",
+    "scales.gad7_total.median": "GAD-7 总分中位数",
+    "scales.gad7_total.min": "GAD-7 总分最小值",
+    "scales.gad7_total.max": "GAD-7 总分最大值",
+    "scales.gad7_severity_distribution": "GAD-7 严重程度分布（minimal/mild/moderate/severe）",
+    "scales.phq9_total.count": "有有效 PHQ-9 总分的量表条目数",
+    "scales.phq9_total.mean": "PHQ-9 总分均值",
+    "scales.phq9_total.median": "PHQ-9 总分中位数",
+    "scales.phq9_total.min": "PHQ-9 总分最小值",
+    "scales.phq9_total.max": "PHQ-9 总分最大值",
+    "scales.phq9_severity_distribution": "PHQ-9 严重程度分布（minimal/mild/moderate/moderately_severe/severe）"
+  },
+  "dataset_meta": {
+    "schema_version": "0.2",
+    "patient_centered": true,
+    "source_dir": "processed_dataset\\anonymized_dialogues"
+  },
+  "base": {
+    "patient_count": 84,
+    "patients_with_keywords": 47,
+    "patients_with_scales": 84
+  },
+  "demographics": {
+    "gender_distribution": {
+      "男": 21,
+      "女": 15,
+      "unknown": 48
+    },
+    "age_distribution": {
+      "age_stats": {
+        "count": 35,
+        "mean": 20.09,
+        "median": 11,
+        "min": 3,
+        "max": 60
+      },
+      "age_buckets": {
+        "45-59": 5,
+        "0-12": 20,
+        "18-44": 8,
+        "13-17": 1,
+        "unknown": 49,
+        "60+": 1
+      }
+    }
+  },
+  "visits_and_dialogue": {
+    "visits_per_patient": {
+      "count": 84,
+      "mean": 1.56,
+      "median": 2.0,
+      "min": 1,
+      "max": 4
+    },
+    "turns_per_visit": {
+      "count": 131,
+      "mean": 42.22,
+      "median": 30,
+      "min": 3,
+      "max": 216
+    },
+    "turn_role_distribution": {
+      "doctor": 2824,
+      "patient": 818,
+      "caregiver": 1889
+    }
+  },
+  "scales": {
+    "gad7_total": {
+      "count": 109,
+      "mean": 11.72,
+      "median": 11,
+      "min": 7,
+      "max": 27
+    },
+    "gad7_severity_distribution": {
+      "moderate": 48,
+      "mild": 39,
+      "severe": 22
+    },
+    "phq9_total": {
+      "count": 109,
+      "mean": 13.54,
+      "median": 13,
+      "min": 9,
+      "max": 36
+    },
+    "phq9_severity_distribution": {
+      "moderately_severe": 26,
+      "moderate": 47,
+      "severe": 9,
+      "mild": 27
+    }
+  }
+}
