@@ -125,47 +125,47 @@ def create_discrep_comparison(data, output_dir):
 
 
 def create_discrep_heatmap(data, output_dir):
-    """Create heatmap with discrep features"""
-    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
-    
-    datasets = ['with_caregiver', 'without_caregiver']
+    """Create heatmap with discrep features - split into two separate figures"""
     scales = ['GAD-7_mean', 'PHQ-9_mean']
     features = ['discrep', 'posemo', 'negemo', 'anx', 'sad', 'insight', 'cause', 
                 'tentat', 'certain', 'feel', 'see', 'hear', 'pronoun_density', 'health']
     
     feature_labels = [
-        'discrep',
-        'posemo',
-        'negemo',
-        'anx',
-        'sad',
-        'insight',
-        'cause',
-        'tentat',
-        'certain',
-        'feel',
-        'see',
-        'hear',
-        'pronoun',
-        'health'
+        'discrep', 'posemo', 'negemo', 'anx', 'sad', 'insight', 'cause',
+        'tentat', 'certain', 'feel', 'see', 'hear', 'pronoun', 'health'
     ]
     
-    for idx, ds_name in enumerate(datasets):
-        ax = axes[idx]
+    feature_defs = (
+        "Feature Definitions: discrep=Difference words | posemo=Positive emotion | negemo=Negative emotion | "
+        "anx=Anxiety | sad=Sadness | insight=Insight | cause=Causal | tentat=Tentative | "
+        "certain=Certainty | feel=Feeling | see=See | hear=Hear | pronoun=Pronoun density | health=Health-related words"
+    )
+    
+    datasets_info = {
+        'with_caregiver': {'title': 'Figure 1: LIWC characteristics and Spearman correlation analysis between GAD-7 and PHQ-9', 'filename': 'discrep_heatmap_caregiver.png'},
+        'without_caregiver': {'title': 'Figure 2: LIWC characteristics and Spearman correlation analysis between GAD-7 and PHQ-9', 'filename': 'discrep_heatmap_no_caregiver.png'}
+    }
+    
+    for ds_name, info in datasets_info.items():
+        fig, ax = plt.subplots(figsize=(12.5, 5.8))
         
         corr_matrix = []
         sig_matrix = []
+        p_matrix = []
         for scale in scales:
             row = []
             sig_row = []
+            p_row = []
             for feat in features:
                 corr = data['correlations'][ds_name]['correlations'].get(scale, {}).get(feat, {})
                 r = corr.get('spearman_r', 0) or 0
                 p = corr.get('spearman_p', 1) or 1
                 row.append(r)
                 sig_row.append(p < 0.05)
+                p_row.append(p)
             corr_matrix.append(row)
             sig_matrix.append(sig_row)
+            p_matrix.append(p_row)
         
         im = ax.imshow(corr_matrix, cmap='RdBu_r', aspect='auto', vmin=-0.6, vmax=0.6)
         
@@ -174,37 +174,125 @@ def create_discrep_heatmap(data, output_dir):
         ax.set_yticks(range(len(scales)))
         ax.set_yticklabels([s.replace('_mean', '') for s in scales], fontsize=12)
         
-        ds_title = 'With Caregiver\n(Pediatric)' if ds_name == 'with_caregiver' else 'Without Caregiver\n(Adult)'
-        ax.set_title(ds_title, fontsize=13, fontweight='bold')
+        ax.set_title(info['title'], fontsize=14, fontweight='bold', pad=10)
         
         for i in range(len(scales)):
             for j in range(len(features)):
                 val = corr_matrix[i][j]
+                p_val = p_matrix[i][j]
                 is_sig = sig_matrix[i][j]
                 color = 'white' if abs(val) > 0.35 else 'black'
                 marker = '*' if is_sig else ''
-                ax.text(j, i, f'{val:.2f}{marker}', ha='center', va='center', 
-                       color=color, fontsize=10, fontweight='bold' if is_sig else 'normal')
+                ax.text(
+                    j,
+                    i,
+                    f'{val:.2f}{marker}\n(p={p_val:.3f})',
+                    ha='center',
+                    va='center',
+                    color=color,
+                    fontsize=9,
+                    fontweight='bold' if is_sig else 'normal',
+                    linespacing=1.15,
+                )
         
         cbar = plt.colorbar(im, ax=ax, shrink=0.8)
         cbar.set_label('Spearman rho', fontsize=11)
-    
-    fig.suptitle('Heatmap: LIWC Feature Correlations with GAD-7 and PHQ-9 (Spearman)', fontsize=15, fontweight='bold', y=0.98)
-    plt.tight_layout(rect=[0, 0.12, 1, 0.95])
-    
-    feature_defs = (
-        "Feature Definitions: discrep=Difference words | posemo=Positive emotion | negemo=Negative emotion | "
-        "anx=Anxiety | sad=Sadness | insight=Insight | cause=Causal | tentat=Tentative | "
-        "certain=Certainty | feel=Feeling | see=See | hear=Hear | pronoun=Pronoun density | health=Health-related words"
+        
+        plt.tight_layout()
+        fig.text(0.5, 0.02, feature_defs, ha='center', fontsize=8, style='italic',
+                 bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8, edgecolor='gray'))
+        fig.text(0.5, 0.01, '', ha='center', fontsize=9)
+        
+        plt.savefig(f'{output_dir}/{info["filename"]}', dpi=150, bbox_inches='tight', facecolor='white')
+        plt.close()
+        print(f'Heatmap saved: {output_dir}/{info["filename"]}')
+
+
+def create_negative_factor_heatmap(data, output_dir):
+    """Create split heatmaps for negative-correlation candidate factors."""
+    scales = ['GAD-7_mean', 'PHQ-9_mean']
+    factor_names = ['time', 'PastM', 'funct', 'space', 'feel', 'pronoun_density']
+    factor_labels = ['time', 'PastM', 'funct', 'space', 'feel', 'pronoun\ndensity']
+
+    factor_defs = (
+        "Factor Definitions: time=temporal words | PastM=past-tense markers | funct=function words | "
+        "space=spatial words | feel=feeling/perception words | pronoun_density=pronoun density"
     )
-    fig.text(0.5, 0.06, feature_defs, ha='center', fontsize=9, style='italic',
-             bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8, edgecolor='gray'))
-    
-    fig.text(0.5, 0.02, '* = Statistically significant (p<0.05)', ha='center', fontsize=9)
-    
-    plt.savefig(f'{output_dir}/discrep_heatmap.png', dpi=150, bbox_inches='tight', facecolor='white')
-    plt.close()
-    print(f'Heatmap saved: {output_dir}/discrep_heatmap.png')
+
+    datasets_info = {
+        'with_caregiver': {
+            'title': 'Figure 2: Negative-correlation candidate factors and Spearman analysis between GAD-7 and PHQ-9',
+            'filename': 'negative_factor_heatmap_caregiver.png'
+        },
+        'without_caregiver': {
+            'title': 'Figure 4: Negative-correlation candidate factors and Spearman analysis between GAD-7 and PHQ-9',
+            'filename': 'negative_factor_heatmap_no_caregiver.png'
+        }
+    }
+
+    for ds_name, info in datasets_info.items():
+        fig, ax = plt.subplots(figsize=(9.4, 5.8))
+
+        corr_matrix = []
+        sig_matrix = []
+        p_matrix = []
+
+        for scale in scales:
+            scale_corrs = data['correlations'][ds_name]['correlations'].get(scale, {})
+
+            row = []
+            sig_row = []
+            p_row = []
+
+            for factor_name in factor_names:
+                corr = scale_corrs.get(factor_name, {})
+                r = corr.get('spearman_r', 0) or 0
+                p = corr.get('spearman_p', 1) or 1
+                row.append(float(r))
+                sig_row.append(p < 0.05)
+                p_row.append(float(p))
+
+            corr_matrix.append(row)
+            sig_matrix.append(sig_row)
+            p_matrix.append(p_row)
+
+        im = ax.imshow(corr_matrix, cmap='RdBu_r', aspect='auto', vmin=-0.6, vmax=0.6)
+
+        ax.set_xticks(range(len(factor_labels)))
+        ax.set_xticklabels(factor_labels, fontsize=11)
+        ax.set_yticks(range(len(scales)))
+        ax.set_yticklabels([s.replace('_mean', '') for s in scales], fontsize=12)
+        ax.set_title(info['title'], fontsize=13, fontweight='bold', pad=10, loc='center')
+
+        for i in range(len(scales)):
+            for j in range(len(factor_labels)):
+                val = corr_matrix[i][j]
+                p_val = p_matrix[i][j]
+                is_sig = sig_matrix[i][j]
+                color = 'white' if abs(val) > 0.35 else 'black'
+                marker = '*' if is_sig else ''
+                ax.text(
+                    j,
+                    i,
+                    f'{val:.2f}{marker}\n(p={p_val:.3f})',
+                    ha='center',
+                    va='center',
+                    color=color,
+                    fontsize=9,
+                    fontweight='bold' if is_sig else 'normal',
+                    linespacing=1.15,
+                )
+
+        cbar = plt.colorbar(im, ax=ax, shrink=0.8)
+        cbar.set_label('Spearman rho', fontsize=11)
+
+        plt.tight_layout()
+        fig.text(0.5, 0.02, factor_defs, ha='center', fontsize=8, style='italic',
+                 bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8, edgecolor='gray'))
+
+        plt.savefig(f'{output_dir}/{info["filename"]}', dpi=150, bbox_inches='tight', facecolor='white')
+        plt.close()
+        print(f'Heatmap saved: {output_dir}/{info["filename"]}')
 
 
 def main():
@@ -221,7 +309,10 @@ def main():
     
     print('Generating heatmap...')
     create_discrep_heatmap(data, output_dir)
-    
+
+    print('Generating negative-factor heatmap...')
+    create_negative_factor_heatmap(data, output_dir)
+
     print('\nAll plots generated!')
 
 
