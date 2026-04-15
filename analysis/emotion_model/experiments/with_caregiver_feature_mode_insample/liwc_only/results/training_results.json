@@ -1,0 +1,36 @@
+{
+  "text_field": "full_text",
+  "classification_target": "anxiety",
+  "feature_mode": "liwc_only",
+  "best_classification_model": "Random Forest",
+  "best_gad_model": "Ridge (alpha=0.5)",
+  "best_phq_model": "Ridge (alpha=0.5)",
+  "test_results": {
+    "anxiety": {
+      "acc": 1.0,
+      "f1": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "balanced_acc": 1.0,
+      "confusion_matrix": [
+        [
+          28,
+          0
+        ],
+        [
+          0,
+          50
+        ]
+      ]
+    },
+    "gad_mse": 8.370868009812044,
+    "gad_corr": 0.7490280214258941,
+    "phq_mse": 9.874601629715716,
+    "phq_corr": 0.6497615337948288
+  },
+  "baseline_results": {
+    "acc": 0.5443589743589744,
+    "f1": 0.6419253845290662
+  }
+}

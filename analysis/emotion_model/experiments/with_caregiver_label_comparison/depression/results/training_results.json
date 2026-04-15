@@ -1,0 +1,36 @@
+{
+  "text_field": "early_text",
+  "classification_target": "depression",
+  "feature_mode": "text_only",
+  "best_classification_model": "Random Forest",
+  "best_gad_model": "Ridge (alpha=0.5)",
+  "best_phq_model": "Ridge (alpha=0.5)",
+  "test_results": {
+    "depression": {
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "balanced_acc": 0.5,
+      "confusion_matrix": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          10
+        ]
+      ]
+    },
+    "gad_mse": 30.024386842780135,
+    "gad_corr": -0.06365532013819494,
+    "phq_mse": 27.43403100069237,
+    "phq_corr": -0.23249306961010904
+  },
+  "baseline_results": {
+    "acc": 0.7258333333333331,
+    "f1": 0.8312485402454444
+  }
+}

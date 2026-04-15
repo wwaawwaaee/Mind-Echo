@@ -1,0 +1,36 @@
+{
+  "text_field": "full_text",
+  "classification_target": "anxiety",
+  "feature_mode": "liwc_only",
+  "best_classification_model": "Logistic Regression",
+  "best_gad_model": "Ridge (alpha=0.5)",
+  "best_phq_model": "Ridge (alpha=0.5)",
+  "test_results": {
+    "anxiety": {
+      "acc": 0.3333333333333333,
+      "f1": 0.42857142857142855,
+      "precision": 0.375,
+      "recall": 0.5,
+      "specificity": 0.16666666666666666,
+      "balanced_acc": 0.3333333333333333,
+      "confusion_matrix": [
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    "gad_mse": 231.2310619541806,
+    "gad_corr": -0.2641744323470596,
+    "phq_mse": 261.8413898170459,
+    "phq_corr": -0.166550231497089
+  },
+  "baseline_results": {
+    "acc": 0.495,
+    "f1": 0.48819591519591526
+  }
+}

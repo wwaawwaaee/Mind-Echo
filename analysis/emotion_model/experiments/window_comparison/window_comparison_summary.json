@@ -1,0 +1,113 @@
+{
+  "datasets": [
+    "with_caregiver"
+  ],
+  "windows": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    15
+  ],
+  "max_chars": 1000,
+  "min_chars": 30,
+  "results": [
+    {
+      "window": 4,
+      "samples": 78,
+      "patients": 63,
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "gad_corr": 0.21714784139020105,
+      "gad_mse": 21.000998549894792,
+      "phq_corr": 0.25403839298933695,
+      "phq_mse": 17.303505676227612,
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444,
+      "best_cls_model": "Logistic Regression",
+      "best_gad_model": "Ridge (alpha=5)",
+      "best_phq_model": "Ridge (alpha=5)"
+    },
+    {
+      "window": 6,
+      "samples": 78,
+      "patients": 63,
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "gad_corr": -0.20864007806067683,
+      "gad_mse": 38.30233245868579,
+      "phq_corr": -0.18760263598889412,
+      "phq_mse": 25.656587442705405,
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444,
+      "best_cls_model": "Logistic Regression",
+      "best_gad_model": "Ridge (alpha=0.5)",
+      "best_phq_model": "Ridge (alpha=0.5)"
+    },
+    {
+      "window": 8,
+      "samples": 78,
+      "patients": 63,
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "gad_corr": 0.18538655444130872,
+      "gad_mse": 21.586257353029108,
+      "phq_corr": 0.006616394754228599,
+      "phq_mse": 21.124961346424705,
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444,
+      "best_cls_model": "Logistic Regression",
+      "best_gad_model": "Ridge (alpha=5)",
+      "best_phq_model": "Ridge Regression"
+    },
+    {
+      "window": 10,
+      "samples": 78,
+      "patients": 63,
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "gad_corr": -0.06365532013819494,
+      "gad_mse": 30.024386842780135,
+      "phq_corr": -0.23249306961010904,
+      "phq_mse": 27.43403100069237,
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444,
+      "best_cls_model": "Logistic Regression",
+      "best_gad_model": "Ridge (alpha=0.5)",
+      "best_phq_model": "Ridge (alpha=0.5)"
+    },
+    {
+      "window": 12,
+      "samples": 78,
+      "patients": 63,
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "gad_corr": -0.053050924337592106,
+      "gad_mse": 27.39335957551903,
+      "phq_corr": -0.09434493228766627,
+      "phq_mse": 26.514910470186067,
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444,
+      "best_cls_model": "Logistic Regression",
+      "best_gad_model": "Ridge Regression",
+      "best_phq_model": "Ridge (alpha=0.5)"
+    },
+    {
+      "window": 15,
+      "samples": 78,
+      "patients": 63,
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "gad_corr": -0.08658885876350095,
+      "gad_mse": 27.37213324463262,
+      "phq_corr": -0.15498898150849025,
+      "phq_mse": 28.33531867396977,
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444,
+      "best_cls_model": "Logistic Regression",
+      "best_gad_model": "Ridge Regression",
+      "best_phq_model": "Ridge (alpha=0.5)"
+    }
+  ]
+}

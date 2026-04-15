@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+"""Exploratory in-sample feature-mode comparison for with_caregiver."""
+
+import json
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+def run_command(command, workdir):
+    result = subprocess.run(command, cwd=workdir, text=True, capture_output=True)
+    if result.returncode != 0:
+        raise RuntimeError(f"Command failed: {' '.join(command)}\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}")
+    return result.stdout
+
+
+def load_json(path: Path):
+    with open(path, encoding='utf-8') as f:
+        return json.load(f)
+
+
+def save_json(path: Path, payload):
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+
+def main():
+    script_dir = Path(__file__).resolve().parent
+    experiment_root = script_dir.parent
+    analysis_dir = experiment_root.parent
+    out_root = experiment_root / 'experiments' / 'with_caregiver_feature_mode_insample'
+    out_root.mkdir(exist_ok=True)
+
+    prepared_dir = out_root / 'prepared_data'
+    run_command([
+        sys.executable,
+        str(experiment_root / 'core' / '01_prepare_data.py'),
+        '--datasets',
+        'with_caregiver',
+        '--output-dir',
+        str(prepared_dir),
+        '--max-role-turns',
+        '10',
+    ], script_dir)
+
+    all_data = load_json(prepared_dir / 'all_data.json')
+    metadata = load_json(prepared_dir / 'metadata.json')
+
+    insample_dir = out_root / 'insample_data'
+    insample_dir.mkdir(exist_ok=True)
+    save_json(insample_dir / 'all_data.json', all_data)
+    save_json(insample_dir / 'train.json', all_data)
+    save_json(insample_dir / 'val.json', all_data)
+    save_json(insample_dir / 'test.json', all_data)
+    shutil.copyfile(prepared_dir / 'train.csv', insample_dir / 'train.csv')
+    shutil.copyfile(prepared_dir / 'train.csv', insample_dir / 'val.csv')
+    shutil.copyfile(prepared_dir / 'train.csv', insample_dir / 'test.csv')
+    metadata['evaluation_mode'] = 'in_sample_resubstitution'
+    metadata['warning'] = 'Train/val/test are identical; results are exploratory and do not estimate generalization.'
+    save_json(insample_dir / 'metadata.json', metadata)
+
+    summary = []
+    for feature_mode in ['text_only', 'liwc_only', 'hybrid']:
+        result_dir = out_root / feature_mode / 'results'
+        model_dir = out_root / feature_mode / 'models'
+        run_command([
+            sys.executable,
+            str(experiment_root / 'core' / '02_train_model.py'),
+            '--data-dir',
+            str(insample_dir),
+            '--results-dir',
+            str(result_dir),
+            '--models-dir',
+            str(model_dir),
+            '--text-field',
+            'full_text',
+            '--classification-target',
+            'anxiety',
+            '--feature-mode',
+            feature_mode,
+        ], analysis_dir)
+
+        results = load_json(result_dir / 'training_results.json')
+        cls = results['test_results']['anxiety']
+        summary.append({
+            'feature_mode': feature_mode,
+            'acc': cls['acc'],
+            'f1': cls['f1'],
+            'precision': cls['precision'],
+            'recall': cls['recall'],
+            'specificity': cls['specificity'],
+            'balanced_acc': cls['balanced_acc'],
+            'confusion_matrix': cls['confusion_matrix'],
+            'gad_corr': results['test_results']['gad_corr'],
+            'gad_mse': results['test_results']['gad_mse'],
+            'phq_corr': results['test_results']['phq_corr'],
+            'phq_mse': results['test_results']['phq_mse'],
+        })
+
+    payload = {
+        'group': 'with_caregiver',
+        'text_field': 'full_text',
+        'classification_target': 'anxiety',
+        'evaluation_mode': 'in_sample_resubstitution',
+        'warning': 'All samples were used for both training and evaluation. Interpret as optimistic fit, not generalization.',
+        'comparison': summary,
+    }
+    save_json(out_root / 'summary.json', payload)
+
+    lines = [
+        '# With-caregiver Feature Mode Comparison (In-sample)',
+        '',
+        '> Warning: train/validation/test are identical in this exploratory run. Metrics are optimistic and do not estimate generalization.',
+        '',
+        '| Feature Mode | ACC | F1 | Precision | Recall | Specificity | Balanced ACC | GAD r | PHQ r | Confusion Matrix |',
+        '|---|---:|---:|---:|---:|---:|---:|---:|---:|---|',
+    ]
+    for row in summary:
+        lines.append(
+            f"| {row['feature_mode']} | {row['acc']:.3f} | {row['f1']:.3f} | {row['precision']:.3f} | {row['recall']:.3f} | {row['specificity']:.3f} | {row['balanced_acc']:.3f} | {row['gad_corr']:.3f} | {row['phq_corr']:.3f} | {row['confusion_matrix']} |"
+        )
+
+    (out_root / 'summary.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    print(f'Saved in-sample feature comparison to: {out_root}')
+
+
+if __name__ == '__main__':
+    main()

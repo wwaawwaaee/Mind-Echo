@@ -1,0 +1,36 @@
+{
+  "text_field": "full_text",
+  "classification_target": "anxiety",
+  "feature_mode": "text_only",
+  "best_classification_model": "Gradient Boosting",
+  "best_gad_model": "Ridge (alpha=0.5)",
+  "best_phq_model": "Ridge (alpha=0.5)",
+  "test_results": {
+    "anxiety": {
+      "acc": 0.5,
+      "f1": 0.5714285714285714,
+      "precision": 0.5,
+      "recall": 0.6666666666666666,
+      "specificity": 0.3333333333333333,
+      "balanced_acc": 0.5,
+      "confusion_matrix": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    "gad_mse": 21.00027878068169,
+    "gad_corr": 0.3014293115198116,
+    "phq_mse": 16.399916431629357,
+    "phq_corr": 0.36057778239327254
+  },
+  "baseline_results": {
+    "acc": 0.495,
+    "f1": 0.48819591519591526
+  }
+}
