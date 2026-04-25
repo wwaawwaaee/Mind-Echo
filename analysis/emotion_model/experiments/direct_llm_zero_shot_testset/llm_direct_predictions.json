@@ -1,0 +1,19 @@
+{
+  "method": "direct_current_model_zero_shot_manual_judgment",
+  "dataset": "with_caregiver_test",
+  "notes": "Predictions were produced directly by the current model from the visit text without additional classifier training. This is a single-pass manual zero-shot judgment on the held-out test set.",
+  "predictions": [
+    {"patient_id": "P-000021", "visit_id": "V-000021-1", "pred_anxiety": 0, "pred_depression": 0},
+    {"patient_id": "P-000031", "visit_id": "V-000031-1", "pred_anxiety": 1, "pred_depression": 1},
+    {"patient_id": "P-000037", "visit_id": "V-000037-1", "pred_anxiety": 1, "pred_depression": 1},
+    {"patient_id": "P-000040", "visit_id": "V-000040-1", "pred_anxiety": 0, "pred_depression": 0},
+    {"patient_id": "P-000045", "visit_id": "V-000045-1", "pred_anxiety": 0, "pred_depression": 0},
+    {"patient_id": "P-000045", "visit_id": "V-000045-2", "pred_anxiety": 0, "pred_depression": 0},
+    {"patient_id": "P-000057", "visit_id": "V-000057-1", "pred_anxiety": 0, "pred_depression": 0},
+    {"patient_id": "P-000057", "visit_id": "V-000057-2", "pred_anxiety": 1, "pred_depression": 1},
+    {"patient_id": "P-000078", "visit_id": "V-000078-1", "pred_anxiety": 0, "pred_depression": 0},
+    {"patient_id": "P-000083", "visit_id": "V-000083-1", "pred_anxiety": 1, "pred_depression": 1},
+    {"patient_id": "P-000105", "visit_id": "V-000105-1", "pred_anxiety": 1, "pred_depression": 1},
+    {"patient_id": "P-000121", "visit_id": "V-000121-1", "pred_anxiety": 1, "pred_depression": 1}
+  ]
+}

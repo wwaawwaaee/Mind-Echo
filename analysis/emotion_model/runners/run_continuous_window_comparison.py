@@ -29,6 +29,25 @@ def load_json(path: Path):
         return json.load(f)
 
 
+def append_summary_row(summary_rows, label, metadata, results):
+    summary_rows.append({
+        'window': label,
+        'samples': metadata['sample_count'],
+        'patients': metadata['patient_count'],
+        'acc': results['test_results']['combined']['acc'],
+        'f1': results['test_results']['combined']['f1'],
+        'gad_corr': results['test_results']['gad_corr'],
+        'gad_mse': results['test_results']['gad_mse'],
+        'phq_corr': results['test_results']['phq_corr'],
+        'phq_mse': results['test_results']['phq_mse'],
+        'baseline_acc': results['baseline_results']['acc'],
+        'baseline_f1': results['baseline_results']['f1'],
+        'best_cls_model': results['best_classification_model'],
+        'best_gad_model': results['best_gad_model'],
+        'best_phq_model': results['best_phq_model'],
+    })
+
+
 def main():
     args = parse_args()
 
@@ -80,22 +99,48 @@ def main():
         metadata = load_json(data_dir / 'metadata.json')
         results = load_json(results_dir / 'training_results.json')
 
-        summary_rows.append({
-            'window': window,
-            'samples': metadata['sample_count'],
-            'patients': metadata['patient_count'],
-            'acc': results['test_results']['combined']['acc'],
-            'f1': results['test_results']['combined']['f1'],
-            'gad_corr': results['test_results']['gad_corr'],
-            'gad_mse': results['test_results']['gad_mse'],
-            'phq_corr': results['test_results']['phq_corr'],
-            'phq_mse': results['test_results']['phq_mse'],
-            'baseline_acc': results['baseline_results']['acc'],
-            'baseline_f1': results['baseline_results']['f1'],
-            'best_cls_model': results['best_classification_model'],
-            'best_gad_model': results['best_gad_model'],
-            'best_phq_model': results['best_phq_model'],
-        })
+        append_summary_row(summary_rows, window, metadata, results)
+
+    print(f"\n{'=' * 70}\nRunning full_text baseline\n{'=' * 70}")
+    full_text_dir = comparison_root / 'full_text_baseline'
+    full_data_dir = full_text_dir / 'data'
+    full_results_dir = full_text_dir / 'results'
+    full_models_dir = full_text_dir / 'models'
+    full_text_dir.mkdir(parents=True, exist_ok=True)
+
+    prepare_cmd = [
+        sys.executable,
+        str(experiment_root / 'core' / '01_prepare_data.py'),
+        '--datasets',
+        *args.datasets,
+        '--output-dir',
+        str(full_data_dir),
+        '--max-role-turns',
+        str(max(args.windows)),
+        '--max-chars',
+        str(args.max_chars),
+        '--min-chars',
+        str(args.min_chars),
+    ]
+    run_command(prepare_cmd, script_dir)
+
+    train_cmd = [
+        sys.executable,
+        str(experiment_root / 'core' / '02_train_model.py'),
+        '--data-dir',
+        str(full_data_dir),
+        '--results-dir',
+        str(full_results_dir),
+        '--models-dir',
+        str(full_models_dir),
+        '--text-field',
+        'full_text',
+    ]
+    run_command(train_cmd, analysis_dir)
+
+    full_metadata = load_json(full_data_dir / 'metadata.json')
+    full_results = load_json(full_results_dir / 'training_results.json')
+    append_summary_row(summary_rows, 'full_text', full_metadata, full_results)
 
     summary = {
         'datasets': args.datasets,
@@ -111,7 +156,7 @@ def main():
     lines = [
         '# Continuous Early-Text Window Comparison',
         '',
-        '| Window | Samples | Patients | ACC | F1 | GAD r | GAD MSE | PHQ r | PHQ MSE |',
+        '| Window / Text | Samples | Patients | ACC | F1 | GAD r | GAD MSE | PHQ r | PHQ MSE |',
         '|---|---:|---:|---:|---:|---:|---:|---:|---:|',
     ]
     for row in summary_rows:

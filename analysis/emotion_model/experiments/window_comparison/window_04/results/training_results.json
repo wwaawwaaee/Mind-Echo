@@ -1,12 +1,28 @@
 {
   "text_field": "early_text",
-  "best_classification_model": "Logistic Regression",
+  "classification_target": "combined",
+  "feature_mode": "text_only",
+  "best_classification_model": "Gradient Boosting",
   "best_gad_model": "Ridge (alpha=5)",
   "best_phq_model": "Ridge (alpha=5)",
   "test_results": {
     "combined": {
       "acc": 0.8333333333333334,
-      "f1": 0.9090909090909091
+      "f1": 0.9090909090909091,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "balanced_acc": 0.5,
+      "confusion_matrix": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          10
+        ]
+      ]
     },
     "gad_mse": 21.000998549894792,
     "gad_corr": 0.21714784139020105,

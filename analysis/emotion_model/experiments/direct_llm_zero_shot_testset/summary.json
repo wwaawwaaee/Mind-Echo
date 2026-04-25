@@ -1,0 +1,139 @@
+{
+  "method": "direct_current_model_zero_shot_manual_judgment",
+  "dataset": "with_caregiver_test",
+  "n_samples": 12,
+  "anxiety": {
+    "acc": 0.8333333333333334,
+    "f1": 0.8333333333333334,
+    "precision": 0.8333333333333334,
+    "recall": 0.8333333333333334,
+    "specificity": 0.8333333333333334,
+    "balanced_acc": 0.8333333333333334,
+    "confusion_matrix": [
+      [
+        5,
+        1
+      ],
+      [
+        1,
+        5
+      ]
+    ]
+  },
+  "depression": {
+    "acc": 0.6666666666666666,
+    "f1": 0.75,
+    "precision": 1.0,
+    "recall": 0.6,
+    "specificity": 1.0,
+    "balanced_acc": 0.8,
+    "confusion_matrix": [
+      [
+        2,
+        0
+      ],
+      [
+        4,
+        6
+      ]
+    ]
+  },
+  "predictions": [
+    {
+      "patient_id": "P-000021",
+      "visit_id": "V-000021-1",
+      "pred_anxiety": 0,
+      "pred_depression": 0,
+      "true_anxiety": 0,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000031",
+      "visit_id": "V-000031-1",
+      "pred_anxiety": 1,
+      "pred_depression": 1,
+      "true_anxiety": 0,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000037",
+      "visit_id": "V-000037-1",
+      "pred_anxiety": 1,
+      "pred_depression": 1,
+      "true_anxiety": 1,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000040",
+      "visit_id": "V-000040-1",
+      "pred_anxiety": 0,
+      "pred_depression": 0,
+      "true_anxiety": 1,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000045",
+      "visit_id": "V-000045-1",
+      "pred_anxiety": 0,
+      "pred_depression": 0,
+      "true_anxiety": 0,
+      "true_depression": 0
+    },
+    {
+      "patient_id": "P-000045",
+      "visit_id": "V-000045-2",
+      "pred_anxiety": 0,
+      "pred_depression": 0,
+      "true_anxiety": 0,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000057",
+      "visit_id": "V-000057-1",
+      "pred_anxiety": 0,
+      "pred_depression": 0,
+      "true_anxiety": 0,
+      "true_depression": 0
+    },
+    {
+      "patient_id": "P-000057",
+      "visit_id": "V-000057-2",
+      "pred_anxiety": 1,
+      "pred_depression": 1,
+      "true_anxiety": 1,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000078",
+      "visit_id": "V-000078-1",
+      "pred_anxiety": 0,
+      "pred_depression": 0,
+      "true_anxiety": 0,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000083",
+      "visit_id": "V-000083-1",
+      "pred_anxiety": 1,
+      "pred_depression": 1,
+      "true_anxiety": 1,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000105",
+      "visit_id": "V-000105-1",
+      "pred_anxiety": 1,
+      "pred_depression": 1,
+      "true_anxiety": 1,
+      "true_depression": 1
+    },
+    {
+      "patient_id": "P-000121",
+      "visit_id": "V-000121-1",
+      "pred_anxiety": 1,
+      "pred_depression": 1,
+      "true_anxiety": 1,
+      "true_depression": 1
+    }
+  ]
+}

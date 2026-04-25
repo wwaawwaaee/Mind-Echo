@@ -1,0 +1,177 @@
+{
+  "group": "with_caregiver",
+  "text_field": "full_text",
+  "classification_target": "depression",
+  "evaluation": "patient_level_5fold_cv",
+  "best_ml_baseline": {
+    "feature_mode": "liwc_only",
+    "classification": {
+      "acc": {
+        "mean": 0.6666666666666666,
+        "std": 0.11782166373143967
+      },
+      "f1": {
+        "mean": 0.7605552713839159,
+        "std": 0.11380207463524711
+      },
+      "precision": {
+        "mean": 0.7851648351648353,
+        "std": 0.1303530175704091
+      },
+      "recall": {
+        "mean": 0.7533333333333333,
+        "std": 0.138001610296563
+      },
+      "specificity": {
+        "mean": 0.47000000000000003,
+        "std": 0.3022875746334569
+      },
+      "balanced_acc": {
+        "mean": 0.6116666666666667,
+        "std": 0.15235193176035253
+      }
+    }
+  },
+  "zero_shot": {
+    "model": "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
+    "task": "depression",
+    "classification": {
+      "acc": {
+        "mean": 0.41083333333333333,
+        "std": 0.11930353445448853
+      },
+      "f1": {
+        "mean": 0.4687581699346405,
+        "std": 0.08714004337148958
+      },
+      "precision": {
+        "mean": 0.7695238095238095,
+        "std": 0.12510675713274688
+      },
+      "recall": {
+        "mean": 0.3533333333333333,
+        "std": 0.09797958971132711
+      },
+      "specificity": {
+        "mean": 0.66,
+        "std": 0.23132468763863298
+      },
+      "balanced_acc": {
+        "mean": 0.5066666666666666,
+        "std": 0.11085526098877262
+      }
+    },
+    "folds": [
+      {
+        "fold": 1,
+        "size": 16,
+        "metrics": {
+          "acc": 0.5625,
+          "f1": 0.5882352941176471,
+          "precision": 0.7142857142857143,
+          "recall": 0.5,
+          "specificity": 0.6666666666666666,
+          "balanced_acc": 0.5833333333333333,
+          "confusion_matrix": [
+            [
+              4,
+              2
+            ],
+            [
+              5,
+              5
+            ]
+          ]
+        }
+      },
+      {
+        "fold": 2,
+        "size": 16,
+        "metrics": {
+          "acc": 0.25,
+          "f1": 0.3333333333333333,
+          "precision": 1.0,
+          "recall": 0.2,
+          "specificity": 1.0,
+          "balanced_acc": 0.6,
+          "confusion_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              12,
+              3
+            ]
+          ]
+        }
+      },
+      {
+        "fold": 3,
+        "size": 16,
+        "metrics": {
+          "acc": 0.375,
+          "f1": 0.4444444444444444,
+          "precision": 0.6666666666666666,
+          "recall": 0.3333333333333333,
+          "specificity": 0.5,
+          "balanced_acc": 0.41666666666666663,
+          "confusion_matrix": [
+            [
+              2,
+              2
+            ],
+            [
+              8,
+              4
+            ]
+          ]
+        }
+      },
+      {
+        "fold": 4,
+        "size": 15,
+        "metrics": {
+          "acc": 0.5333333333333333,
+          "f1": 0.5333333333333333,
+          "precision": 0.8,
+          "recall": 0.4,
+          "specificity": 0.8,
+          "balanced_acc": 0.6000000000000001,
+          "confusion_matrix": [
+            [
+              4,
+              1
+            ],
+            [
+              6,
+              4
+            ]
+          ]
+        }
+      },
+      {
+        "fold": 5,
+        "size": 15,
+        "metrics": {
+          "acc": 0.3333333333333333,
+          "f1": 0.4444444444444444,
+          "precision": 0.6666666666666666,
+          "recall": 0.3333333333333333,
+          "specificity": 0.3333333333333333,
+          "balanced_acc": 0.3333333333333333,
+          "confusion_matrix": [
+            [
+              1,
+              2
+            ],
+            [
+              8,
+              4
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}
