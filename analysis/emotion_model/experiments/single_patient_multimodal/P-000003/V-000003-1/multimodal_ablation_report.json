@@ -1,0 +1,59 @@
+{
+  "patient_id": "P-000003",
+  "visit_id": "V-000003-1",
+  "labels": {
+    "gad_score": 12.0,
+    "phq_score": 13.0,
+    "anxiety_label": 1,
+    "depression_label": 1,
+    "combined_label": 1
+  },
+  "text_length": 235,
+  "target_role_turns": 5,
+  "dialogue_turns": 11,
+  "audio_path": null,
+  "available_modalities": [
+    "text"
+  ],
+  "ablations": {
+    "text_only": {
+      "available": true,
+      "features": {
+        "liwc_summary": {
+          "anxiety_index": 0.008065,
+          "depression_index": 0.0,
+          "positive_affect": 0.024194,
+          "negative_affect": 0.024194,
+          "cognitive_complexity": 0.040323,
+          "health_focus": 0.040323,
+          "social_reference": 0.0,
+          "pronoun_density": 0.040323
+        },
+        "domain_summary": {
+          "absolute_count": 0.0,
+          "absolute_density": 0.0,
+          "symptom_count": 7.0,
+          "symptom_density": 0.029787234042553193,
+          "amplification_count": 0.0,
+          "catastrophic_count": 0.0,
+          "symptom_amplification_score": 7.0,
+          "symptom_amplification_density": 0.029787234042553193,
+          "reassurance_count": 0.0,
+          "risk_confirmation_count": 0.0,
+          "reassurance_score": 0.0,
+          "reassurance_density": 0.0,
+          "question_marker_count": 1.0,
+          "question_density": 0.1
+        }
+      }
+    },
+    "audio_only": {
+      "available": false,
+      "features": null
+    },
+    "multimodal": {
+      "available": false,
+      "features": null
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "group": "with_caregiver",
+  "text_field": "full_text",
+  "classification_target": "anxiety",
+  "evaluation_mode": "in_sample_resubstitution",
+  "warning": "All samples were used for both training and evaluation. Interpret as optimistic fit, not generalization.",
+  "comparison": [
+    {
+      "feature_mode": "text_only",
+      "acc": 0.9871794871794872,
+      "f1": 0.9900990099009901,
+      "precision": 0.9803921568627451,
+      "recall": 1.0,
+      "specificity": 0.9642857142857143,
+      "balanced_acc": 0.9821428571428572,
+      "confusion_matrix": [
+        [
+          27,
+          1
+        ],
+        [
+          0,
+          50
+        ]
+      ],
+      "gad_corr": 0.8959632296137638,
+      "gad_mse": 6.03350757847732,
+      "phq_corr": 0.9384624082888187,
+      "phq_mse": 4.237875640669726
+    },
+    {
+      "feature_mode": "liwc_only",
+      "acc": 1.0,
+      "f1": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "balanced_acc": 1.0,
+      "confusion_matrix": [
+        [
+          28,
+          0
+        ],
+        [
+          0,
+          50
+        ]
+      ],
+      "gad_corr": 0.7490280214258941,
+      "gad_mse": 8.370868009812044,
+      "phq_corr": 0.6497615337948288,
+      "phq_mse": 9.874601629715716
+    },
+    {
+      "feature_mode": "hybrid",
+      "acc": 1.0,
+      "f1": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "balanced_acc": 1.0,
+      "confusion_matrix": [
+        [
+          28,
+          0
+        ],
+        [
+          0,
+          50
+        ]
+      ],
+      "gad_corr": 0.9621285337525477,
+      "gad_mse": 1.8289440875264926,
+      "phq_corr": 0.9528623810719211,
+      "phq_mse": 2.1132113950614007
+    }
+  ]
+}

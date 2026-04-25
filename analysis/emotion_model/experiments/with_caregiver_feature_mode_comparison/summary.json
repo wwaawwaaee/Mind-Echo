@@ -1,0 +1,76 @@
+{
+  "group": "with_caregiver",
+  "text_field": "full_text",
+  "classification_target": "anxiety",
+  "comparison": [
+    {
+      "feature_mode": "text_only",
+      "acc": 0.5,
+      "f1": 0.5714285714285714,
+      "precision": 0.5,
+      "recall": 0.6666666666666666,
+      "specificity": 0.3333333333333333,
+      "balanced_acc": 0.5,
+      "confusion_matrix": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "gad_corr": 0.3014293115198116,
+      "gad_mse": 21.00027878068169,
+      "phq_corr": 0.36057778239327254,
+      "phq_mse": 16.399916431629357
+    },
+    {
+      "feature_mode": "liwc_only",
+      "acc": 0.3333333333333333,
+      "f1": 0.42857142857142855,
+      "precision": 0.375,
+      "recall": 0.5,
+      "specificity": 0.16666666666666666,
+      "balanced_acc": 0.3333333333333333,
+      "confusion_matrix": [
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "gad_corr": -0.2641744323470596,
+      "gad_mse": 231.2310619541806,
+      "phq_corr": -0.166550231497089,
+      "phq_mse": 261.8413898170459
+    },
+    {
+      "feature_mode": "hybrid",
+      "acc": 0.3333333333333333,
+      "f1": 0.42857142857142855,
+      "precision": 0.375,
+      "recall": 0.5,
+      "specificity": 0.16666666666666666,
+      "balanced_acc": 0.3333333333333333,
+      "confusion_matrix": [
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "gad_corr": -0.2197892520156174,
+      "gad_mse": 152.22003230290264,
+      "phq_corr": -0.12318411773128884,
+      "phq_mse": 157.54790552576404
+    }
+  ]
+}

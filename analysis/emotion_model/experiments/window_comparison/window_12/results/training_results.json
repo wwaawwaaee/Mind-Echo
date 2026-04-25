@@ -1,0 +1,36 @@
+{
+  "text_field": "early_text",
+  "classification_target": "combined",
+  "feature_mode": "text_only",
+  "best_classification_model": "Gradient Boosting",
+  "best_gad_model": "Ridge Regression",
+  "best_phq_model": "Ridge (alpha=0.5)",
+  "test_results": {
+    "combined": {
+      "acc": 0.75,
+      "f1": 0.8571428571428571,
+      "precision": 0.8181818181818182,
+      "recall": 0.9,
+      "specificity": 0.0,
+      "balanced_acc": 0.45,
+      "confusion_matrix": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    "gad_mse": 27.39335957551903,
+    "gad_corr": -0.053050924337592106,
+    "phq_mse": 26.514910470186067,
+    "phq_corr": -0.09434493228766627
+  },
+  "baseline_results": {
+    "acc": 0.7258333333333331,
+    "f1": 0.8312485402454444
+  }
+}

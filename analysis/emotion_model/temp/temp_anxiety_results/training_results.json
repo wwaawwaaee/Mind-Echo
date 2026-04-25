@@ -1,0 +1,35 @@
+{
+  "text_field": "early_text",
+  "classification_target": "anxiety",
+  "best_classification_model": "Logistic Regression",
+  "best_gad_model": "Ridge (alpha=0.5)",
+  "best_phq_model": "Ridge (alpha=0.5)",
+  "test_results": {
+    "anxiety": {
+      "acc": 0.5,
+      "f1": 0.6666666666666666,
+      "precision": 0.5,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "balanced_acc": 0.5,
+      "confusion_matrix": [
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          6
+        ]
+      ]
+    },
+    "gad_mse": 30.024386842780135,
+    "gad_corr": -0.06365532013819494,
+    "phq_mse": 27.43403100069237,
+    "phq_corr": -0.23249306961010904
+  },
+  "baseline_results": {
+    "acc": 0.495,
+    "f1": 0.48819591519591526
+  }
+}

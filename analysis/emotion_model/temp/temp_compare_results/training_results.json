@@ -1,0 +1,19 @@
+{
+  "best_classification_model": "Logistic Regression",
+  "best_gad_model": "Ridge (alpha=5)",
+  "best_phq_model": "Ridge (alpha=0.5)",
+  "test_results": {
+    "combined": {
+      "acc": 0.8235294117647058,
+      "f1": 0.9032258064516129
+    },
+    "gad_mse": 10.004474417236795,
+    "gad_corr": 0.20769744125612002,
+    "phq_mse": 13.498316800578802,
+    "phq_corr": -0.034101740176621625
+  },
+  "baseline_results": {
+    "acc": 0.6958823529411764,
+    "f1": 0.8118172156644906
+  }
+}

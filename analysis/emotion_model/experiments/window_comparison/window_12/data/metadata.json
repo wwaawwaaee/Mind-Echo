@@ -1,0 +1,15 @@
+{
+  "analysis_unit": "visit",
+  "early_text_definition": {
+    "target_role_only": true,
+    "max_role_turns": 12,
+    "max_chars": 1000,
+    "min_chars": 30
+  },
+  "datasets": [
+    "with_caregiver"
+  ],
+  "split_strategy": "patient_level",
+  "sample_count": 78,
+  "patient_count": 63
+}

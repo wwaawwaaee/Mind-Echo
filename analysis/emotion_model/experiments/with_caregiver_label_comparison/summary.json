@@ -1,0 +1,69 @@
+{
+  "group": "with_caregiver",
+  "text_field": "early_text",
+  "comparison": [
+    {
+      "target": "combined",
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "balanced_acc": 0.5,
+      "confusion_matrix": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          10
+        ]
+      ],
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444
+    },
+    {
+      "target": "anxiety",
+      "acc": 0.4166666666666667,
+      "f1": 0.5333333333333333,
+      "precision": 0.4444444444444444,
+      "recall": 0.6666666666666666,
+      "specificity": 0.16666666666666666,
+      "balanced_acc": 0.41666666666666663,
+      "confusion_matrix": [
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "baseline_acc": 0.495,
+      "baseline_f1": 0.48819591519591526
+    },
+    {
+      "target": "depression",
+      "acc": 0.8333333333333334,
+      "f1": 0.9090909090909091,
+      "precision": 0.8333333333333334,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "balanced_acc": 0.5,
+      "confusion_matrix": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          10
+        ]
+      ],
+      "baseline_acc": 0.7258333333333331,
+      "baseline_f1": 0.8312485402454444
+    }
+  ]
+}
