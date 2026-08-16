@@ -1,3 +1,24 @@
 raw_data
 paddleocr_config.py
 ocr_results
+
+# Python runtime and test caches
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Per-visit derived predictions and fold manifests stay local
+analysis/emotion_model/experiments/mind_echo_revision_minimal/**/oof_predictions.csv
+analysis/emotion_model/experiments/mind_echo_revision_minimal/**/baseline_oof_predictions.csv
+analysis/emotion_model/experiments/mind_echo_revision_minimal/manifest/*.csv
+
+# Nested run details are reproducible from the tracked aggregate summaries
+analysis/emotion_model/experiments/mind_echo_revision_minimal/main_v2_oof/*/*/summary.json
+analysis/emotion_model/experiments/mind_echo_revision_minimal/window_oof/*/*/*/summary.json
+
+# SVG is the canonical tracked paper figure format
+analysis/paper_figures/**/*.png
+analysis/paper_figures/**/*.pdf
+
+# Legacy/general figure exports are reproducible; revision SVGs remain tracked
+analysis/paper_figures/english_vector_pipeline/outputs/
