@@ -85,6 +85,11 @@ def export_figure(fig, output_dir: Path, stem: str) -> List[Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     paths = [output_dir / f"{stem}.svg", output_dir / f"{stem}.pdf", output_dir / f"{stem}.png"]
     fig.savefig(paths[0], bbox_inches="tight", facecolor="white")
+    svg_text = paths[0].read_text(encoding="utf-8")
+    paths[0].write_text(
+        "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+        encoding="utf-8",
+    )
     fig.savefig(paths[1], bbox_inches="tight", facecolor="white")
     fig.savefig(paths[2], bbox_inches="tight", facecolor="white", dpi=300)
     return paths

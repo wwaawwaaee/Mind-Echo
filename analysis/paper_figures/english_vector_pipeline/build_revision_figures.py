@@ -631,7 +631,7 @@ def write_figure3_caption_stats(output_dir: Path, rows: Sequence[Dict[str, Any]]
     )
     text += "\n"
     path = output_dir / "figure3_caption_stats.md"
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text.rstrip() + "\n", encoding="utf-8")
     return path
 
 
@@ -672,7 +672,7 @@ def write_figure4_caption_stats(output_dir: Path, rows: Sequence[Dict[str, Any]]
         )
         text += "\n\n"
     path = output_dir / "figure4_caption_stats.md"
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text.rstrip() + "\n", encoding="utf-8")
     return path
 
 
