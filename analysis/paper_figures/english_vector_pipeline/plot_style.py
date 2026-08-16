@@ -33,6 +33,7 @@ def apply_academic_style() -> None:
             "font.sans-serif": ["DejaVu Sans", "Arial", "Liberation Sans"],
             "axes.unicode_minus": False,
             "svg.fonttype": "none",
+            "svg.hashsalt": "mind-echo-2026",
             "pdf.fonttype": 42,
             "ps.fonttype": 42,
             "figure.dpi": 120,
@@ -84,7 +85,7 @@ def export_figure(fig, output_dir: Path, stem: str) -> List[Path]:
     """Export a figure as SVG, PDF, and a 300-dpi PNG preview."""
     output_dir.mkdir(parents=True, exist_ok=True)
     paths = [output_dir / f"{stem}.svg", output_dir / f"{stem}.pdf", output_dir / f"{stem}.png"]
-    fig.savefig(paths[0], bbox_inches="tight", facecolor="white")
+    fig.savefig(paths[0], bbox_inches="tight", facecolor="white", metadata={"Date": None})
     svg_text = paths[0].read_text(encoding="utf-8")
     paths[0].write_text(
         "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
