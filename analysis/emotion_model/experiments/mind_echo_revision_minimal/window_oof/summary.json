@@ -1,0 +1,3403 @@
+{
+  "experiment": "mind_echo_revision_minimal_window_oof",
+  "source_manifest_data": "analysis/emotion_model/experiments/with_caregiver_label_comparison/data/all_data.json",
+  "raw_turn_source": "processed_dataset/output/anonymized_dataset_with_caregiver.json",
+  "validated_counts": {
+    "visits": 78,
+    "patients": 63
+  },
+  "grouping_field": "patient_id",
+  "grouping_limitation": "No structured caregiver_id or family_id exists in the source rows; no caregiver/family grouped CV is claimed.",
+  "seed": 2026,
+  "windows": [
+    "4",
+    "6",
+    "8",
+    "10",
+    "12",
+    "15",
+    "full_text"
+  ],
+  "fixed_feature_mode": "hybrid_v2",
+  "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features.",
+  "targets": {
+    "anxiety": [
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "anxiety",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6612903225806451,
+            "random_prevalence": 0.6612903225806451,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6451612903225806,
+            "random_prevalence": 0.6451612903225806,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6290322580645161,
+            "random_prevalence": 0.6290322580645161,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6507936507936508,
+            "random_prevalence": 0.6507936507936508,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6190476190476191,
+            "random_prevalence": 0.6190476190476191,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.48214285714285715,
+              "f1": 0.5555555555555556,
+              "recall": 0.5,
+              "specificity": 0.4642857142857143,
+              "roc_auc": 0.5028571428571429,
+              "pr_auc": 0.6441851266824562,
+              "tn": 13,
+              "fp": 15,
+              "fn": 25,
+              "tp": 25,
+              "confusion_matrix": [
+                [
+                  13,
+                  15
+                ],
+                [
+                  25,
+                  25
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.3624978448275862,
+                "high": 0.6024738637835546,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.4137743628185907,
+                "high": 0.6742845028619878,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.3541666666666667,
+                "high": 0.6481481481481481,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.26666666666666666,
+                "high": 0.65,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.36757623922413796,
+                "high": 0.6383219070133963,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5148078795365901,
+                "high": 0.7971516962006673,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.7812500000000001,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6410256410256411,
+              "tn": 0,
+              "fp": 28,
+              "fn": 0,
+              "tp": 50,
+              "confusion_matrix": [
+                [
+                  0,
+                  28
+                ],
+                [
+                  0,
+                  50
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6956521739130436,
+                "high": 0.8507890873501345,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5333333333333333,
+                "high": 0.7403246753246749,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.44285714285714284,
+              "f1": 0.6,
+              "recall": 0.6,
+              "specificity": 0.2857142857142857,
+              "roc_auc": 0.44285714285714284,
+              "pr_auc": 0.6164102564102565,
+              "tn": 8,
+              "fp": 20,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  8,
+                  20
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330673,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.46808510638297873,
+                "high": 0.7083820093457941,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4489795918367347,
+                "high": 0.7368421052631579,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.125,
+                "high": 0.46153846153846156,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330674,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5037146874154026,
+                "high": 0.7359996007932974,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "4",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "anxiety",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6612903225806451,
+            "random_prevalence": 0.6612903225806451,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6451612903225806,
+            "random_prevalence": 0.6451612903225806,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6290322580645161,
+            "random_prevalence": 0.6290322580645161,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6507936507936508,
+            "random_prevalence": 0.6507936507936508,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6190476190476191,
+            "random_prevalence": 0.6190476190476191,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.4207142857142857,
+              "f1": 0.5473684210526315,
+              "recall": 0.52,
+              "specificity": 0.32142857142857145,
+              "roc_auc": 0.39892857142857147,
+              "pr_auc": 0.5817907863122245,
+              "tn": 9,
+              "fp": 19,
+              "fn": 24,
+              "tp": 26,
+              "confusion_matrix": [
+                [
+                  9,
+                  19
+                ],
+                [
+                  24,
+                  26
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.3170530560709132,
+                "high": 0.5211979052021424,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.4269304327038011,
+                "high": 0.6549728479485111,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.391304347826087,
+                "high": 0.6444791666666665,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.16129032258064516,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.26626190987893117,
+                "high": 0.5339837281692116,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.4667832278008972,
+                "high": 0.7266044216739923,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.7812500000000001,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6410256410256411,
+              "tn": 0,
+              "fp": 28,
+              "fn": 0,
+              "tp": 50,
+              "confusion_matrix": [
+                [
+                  0,
+                  28
+                ],
+                [
+                  0,
+                  50
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6956521739130436,
+                "high": 0.8507890873501345,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5333333333333333,
+                "high": 0.7403246753246749,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.44285714285714284,
+              "f1": 0.6,
+              "recall": 0.6,
+              "specificity": 0.2857142857142857,
+              "roc_auc": 0.44285714285714284,
+              "pr_auc": 0.6164102564102565,
+              "tn": 8,
+              "fp": 20,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  8,
+                  20
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330673,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.46808510638297873,
+                "high": 0.7083820093457941,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4489795918367347,
+                "high": 0.7368421052631579,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.125,
+                "high": 0.46153846153846156,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330674,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5037146874154026,
+                "high": 0.7359996007932974,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "6",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "anxiety",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6612903225806451,
+            "random_prevalence": 0.6612903225806451,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6451612903225806,
+            "random_prevalence": 0.6451612903225806,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6290322580645161,
+            "random_prevalence": 0.6290322580645161,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6507936507936508,
+            "random_prevalence": 0.6507936507936508,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6190476190476191,
+            "random_prevalence": 0.6190476190476191,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.49642857142857144,
+              "f1": 0.6185567010309279,
+              "recall": 0.6,
+              "specificity": 0.39285714285714285,
+              "roc_auc": 0.53,
+              "pr_auc": 0.6674717473997931,
+              "tn": 11,
+              "fp": 17,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  11,
+                  17
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.38514796964725184,
+                "high": 0.620478896103896,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.48936170212765956,
+                "high": 0.7326732673267327,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.46,
+                "high": 0.7347227570273391,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.2222222222222222,
+                "high": 0.5862576064908719,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.3909335660460993,
+                "high": 0.6742053520600583,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5186919458916383,
+                "high": 0.8260372719071568,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.7812500000000001,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6410256410256411,
+              "tn": 0,
+              "fp": 28,
+              "fn": 0,
+              "tp": 50,
+              "confusion_matrix": [
+                [
+                  0,
+                  28
+                ],
+                [
+                  0,
+                  50
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6956521739130436,
+                "high": 0.8507890873501345,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5333333333333333,
+                "high": 0.7403246753246749,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.44285714285714284,
+              "f1": 0.6,
+              "recall": 0.6,
+              "specificity": 0.2857142857142857,
+              "roc_auc": 0.44285714285714284,
+              "pr_auc": 0.6164102564102565,
+              "tn": 8,
+              "fp": 20,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  8,
+                  20
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330673,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.46808510638297873,
+                "high": 0.7083820093457941,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4489795918367347,
+                "high": 0.7368421052631579,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.125,
+                "high": 0.46153846153846156,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330674,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5037146874154026,
+                "high": 0.7359996007932974,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "8",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "anxiety",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6612903225806451,
+            "random_prevalence": 0.6612903225806451,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6451612903225806,
+            "random_prevalence": 0.6451612903225806,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6290322580645161,
+            "random_prevalence": 0.6290322580645161,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6507936507936508,
+            "random_prevalence": 0.6507936507936508,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6190476190476191,
+            "random_prevalence": 0.6190476190476191,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.5107142857142857,
+              "f1": 0.673076923076923,
+              "recall": 0.7,
+              "specificity": 0.32142857142857145,
+              "roc_auc": 0.4932142857142857,
+              "pr_auc": 0.6342446283074602,
+              "tn": 9,
+              "fp": 19,
+              "fn": 15,
+              "tp": 35,
+              "confusion_matrix": [
+                [
+                  9,
+                  19
+                ],
+                [
+                  15,
+                  35
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4010927318295739,
+                "high": 0.6237813977858557,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.5686274509803922,
+                "high": 0.7619480519480517,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.58,
+                "high": 0.8163265306122449,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.15789473684210525,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.35757304637709575,
+                "high": 0.6233211894617859,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5074095882643699,
+                "high": 0.7602471896847227,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.7812500000000001,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6410256410256411,
+              "tn": 0,
+              "fp": 28,
+              "fn": 0,
+              "tp": 50,
+              "confusion_matrix": [
+                [
+                  0,
+                  28
+                ],
+                [
+                  0,
+                  50
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6956521739130436,
+                "high": 0.8507890873501345,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5333333333333333,
+                "high": 0.7403246753246749,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.44285714285714284,
+              "f1": 0.6,
+              "recall": 0.6,
+              "specificity": 0.2857142857142857,
+              "roc_auc": 0.44285714285714284,
+              "pr_auc": 0.6164102564102565,
+              "tn": 8,
+              "fp": 20,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  8,
+                  20
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330673,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.46808510638297873,
+                "high": 0.7083820093457941,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4489795918367347,
+                "high": 0.7368421052631579,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.125,
+                "high": 0.46153846153846156,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330674,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5037146874154026,
+                "high": 0.7359996007932974,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "10",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "anxiety",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6612903225806451,
+            "random_prevalence": 0.6612903225806451,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6451612903225806,
+            "random_prevalence": 0.6451612903225806,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6290322580645161,
+            "random_prevalence": 0.6290322580645161,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6507936507936508,
+            "random_prevalence": 0.6507936507936508,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6190476190476191,
+            "random_prevalence": 0.6190476190476191,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.4978571428571429,
+              "f1": 0.5348837209302325,
+              "recall": 0.46,
+              "specificity": 0.5357142857142857,
+              "roc_auc": 0.5014285714285714,
+              "pr_auc": 0.6451789453850405,
+              "tn": 15,
+              "fp": 13,
+              "fn": 27,
+              "tp": 23,
+              "confusion_matrix": [
+                [
+                  15,
+                  13
+                ],
+                [
+                  27,
+                  23
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.3871736481111481,
+                "high": 0.611906916612799,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.4047552166934189,
+                "high": 0.6516976062530532,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.32608695652173914,
+                "high": 0.5918367346938775,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.3333333333333333,
+                "high": 0.7353328173374611,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.3858654240550261,
+                "high": 0.6197923322252439,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5399280343395979,
+                "high": 0.7660516863237241,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.7812500000000001,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6410256410256411,
+              "tn": 0,
+              "fp": 28,
+              "fn": 0,
+              "tp": 50,
+              "confusion_matrix": [
+                [
+                  0,
+                  28
+                ],
+                [
+                  0,
+                  50
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6956521739130436,
+                "high": 0.8507890873501345,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5333333333333333,
+                "high": 0.7403246753246749,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.44285714285714284,
+              "f1": 0.6,
+              "recall": 0.6,
+              "specificity": 0.2857142857142857,
+              "roc_auc": 0.44285714285714284,
+              "pr_auc": 0.6164102564102565,
+              "tn": 8,
+              "fp": 20,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  8,
+                  20
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330673,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.46808510638297873,
+                "high": 0.7083820093457941,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4489795918367347,
+                "high": 0.7368421052631579,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.125,
+                "high": 0.46153846153846156,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330674,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5037146874154026,
+                "high": 0.7359996007932974,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "12",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "anxiety",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6612903225806451,
+            "random_prevalence": 0.6612903225806451,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6451612903225806,
+            "random_prevalence": 0.6451612903225806,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6290322580645161,
+            "random_prevalence": 0.6290322580645161,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6507936507936508,
+            "random_prevalence": 0.6507936507936508,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6190476190476191,
+            "random_prevalence": 0.6190476190476191,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.4978571428571429,
+              "f1": 0.5348837209302325,
+              "recall": 0.46,
+              "specificity": 0.5357142857142857,
+              "roc_auc": 0.5092857142857143,
+              "pr_auc": 0.6540192538334954,
+              "tn": 15,
+              "fp": 13,
+              "fn": 27,
+              "tp": 23,
+              "confusion_matrix": [
+                [
+                  15,
+                  13
+                ],
+                [
+                  27,
+                  23
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.3792017134307259,
+                "high": 0.6232665639445301,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.3953416594889463,
+                "high": 0.6605345911949677,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.32073584905660374,
+                "high": 0.6170212765957447,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.34372767857142855,
+                "high": 0.7391304347826086,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.3853674568965517,
+                "high": 0.6359183049837709,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5320978805695484,
+                "high": 0.7821443027237514,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.7812500000000001,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6410256410256411,
+              "tn": 0,
+              "fp": 28,
+              "fn": 0,
+              "tp": 50,
+              "confusion_matrix": [
+                [
+                  0,
+                  28
+                ],
+                [
+                  0,
+                  50
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6956521739130436,
+                "high": 0.8507890873501345,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5333333333333333,
+                "high": 0.7403246753246749,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.44285714285714284,
+              "f1": 0.6,
+              "recall": 0.6,
+              "specificity": 0.2857142857142857,
+              "roc_auc": 0.44285714285714284,
+              "pr_auc": 0.6164102564102565,
+              "tn": 8,
+              "fp": 20,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  8,
+                  20
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330673,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.46808510638297873,
+                "high": 0.7083820093457941,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4489795918367347,
+                "high": 0.7368421052631579,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.125,
+                "high": 0.46153846153846156,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330674,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5037146874154026,
+                "high": 0.7359996007932974,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "15",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "anxiety",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6612903225806451,
+            "random_prevalence": 0.6612903225806451,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6451612903225806,
+            "random_prevalence": 0.6451612903225806,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.6290322580645161,
+            "random_prevalence": 0.6290322580645161,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6507936507936508,
+            "random_prevalence": 0.6507936507936508,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.6190476190476191,
+            "random_prevalence": 0.6190476190476191,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.5478571428571428,
+              "f1": 0.6153846153846154,
+              "recall": 0.56,
+              "specificity": 0.5357142857142857,
+              "roc_auc": 0.6092857142857143,
+              "pr_auc": 0.7158471901519841,
+              "tn": 15,
+              "fp": 13,
+              "fn": 22,
+              "tp": 28,
+              "confusion_matrix": [
+                [
+                  15,
+                  13
+                ],
+                [
+                  22,
+                  28
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4281244893790849,
+                "high": 0.6705753660637379,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.48837209302325585,
+                "high": 0.7311827956989247,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.42,
+                "high": 0.7,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.358974358974359,
+                "high": 0.7241379310344828,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.49371755102040815,
+                "high": 0.7303460434151575,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5873520498250555,
+                "high": 0.8375425140272116,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.7812500000000001,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6410256410256411,
+              "tn": 0,
+              "fp": 28,
+              "fn": 0,
+              "tp": 50,
+              "confusion_matrix": [
+                [
+                  0,
+                  28
+                ],
+                [
+                  0,
+                  50
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6956521739130436,
+                "high": 0.8507890873501345,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5333333333333333,
+                "high": 0.7403246753246749,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.44285714285714284,
+              "f1": 0.6,
+              "recall": 0.6,
+              "specificity": 0.2857142857142857,
+              "roc_auc": 0.44285714285714284,
+              "pr_auc": 0.6164102564102565,
+              "tn": 8,
+              "fp": 20,
+              "fn": 20,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  8,
+                  20
+                ],
+                [
+                  20,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.6410256410256411
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330673,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.46808510638297873,
+                "high": 0.7083820093457941,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4489795918367347,
+                "high": 0.7368421052631579,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.125,
+                "high": 0.46153846153846156,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.33219530443756456,
+                "high": 0.5527680261330674,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.5037146874154026,
+                "high": 0.7359996007932974,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "full_text",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      }
+    ],
+    "depression": [
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "depression",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7903225806451613,
+            "random_prevalence": 0.7903225806451613,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7096774193548387,
+            "random_prevalence": 0.7096774193548387,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7580645161290323,
+            "random_prevalence": 0.7580645161290323,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.7777777777777778,
+            "random_prevalence": 0.7777777777777778,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.746031746031746,
+            "random_prevalence": 0.746031746031746,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.47145405887600356,
+              "f1": 0.6788990825688074,
+              "recall": 0.6271186440677966,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5356824264049955,
+              "pr_auc": 0.7635535263191322,
+              "tn": 6,
+              "fp": 13,
+              "fn": 22,
+              "tp": 37,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  22,
+                  37
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.35710120254998545,
+                "high": 0.5894122481995615,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.5607476635514019,
+                "high": 0.7736146523882372,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.4909090909090909,
+                "high": 0.75,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5295098039215681,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.38399739583333325,
+                "high": 0.7034751777337137,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6520086365576128,
+                "high": 0.8943742505738397,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.8613138686131386,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7564102564102564,
+              "tn": 0,
+              "fp": 19,
+              "fn": 0,
+              "tp": 59,
+              "confusion_matrix": [
+                [
+                  0,
+                  19
+                ],
+                [
+                  0,
+                  59
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.7967445225299711,
+                "high": 0.9160464376590329,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.662157403882756,
+                "high": 0.845097508125677,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.5307760927743086,
+              "f1": 0.7586206896551725,
+              "recall": 0.7457627118644068,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5307760927743086,
+              "pr_auc": 0.7679841716416204,
+              "tn": 6,
+              "fp": 13,
+              "fn": 15,
+              "tp": 44,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  15,
+                  44
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6666666666666667,
+                "high": 0.8360655737704918,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.6229508196721312,
+                "high": 0.8596491228070176,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5294117647058824,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6653237237526771,
+                "high": 0.8622322696834416,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "4",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "depression",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7903225806451613,
+            "random_prevalence": 0.7903225806451613,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7096774193548387,
+            "random_prevalence": 0.7096774193548387,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7580645161290323,
+            "random_prevalence": 0.7580645161290323,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.7777777777777778,
+            "random_prevalence": 0.7777777777777778,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.746031746031746,
+            "random_prevalence": 0.746031746031746,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.49687778768956287,
+              "f1": 0.7142857142857143,
+              "recall": 0.6779661016949152,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.4460303300624442,
+              "pr_auc": 0.7163606958789681,
+              "tn": 6,
+              "fp": 13,
+              "fn": 19,
+              "tp": 40,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  19,
+                  40
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.3818707148685452,
+                "high": 0.6201439042248256,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6168224299065421,
+                "high": 0.8031496062992126,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.5689080459770115,
+                "high": 0.7894736842105263,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5238095238095238,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.28941697678539785,
+                "high": 0.6086053948832033,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6076640343807398,
+                "high": 0.8472991276571173,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.8613138686131386,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7564102564102564,
+              "tn": 0,
+              "fp": 19,
+              "fn": 0,
+              "tp": 59,
+              "confusion_matrix": [
+                [
+                  0,
+                  19
+                ],
+                [
+                  0,
+                  59
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.7967445225299711,
+                "high": 0.9160464376590329,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.662157403882756,
+                "high": 0.845097508125677,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.5307760927743086,
+              "f1": 0.7586206896551725,
+              "recall": 0.7457627118644068,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5307760927743086,
+              "pr_auc": 0.7679841716416204,
+              "tn": 6,
+              "fp": 13,
+              "fn": 15,
+              "tp": 44,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  15,
+                  44
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6666666666666667,
+                "high": 0.8360655737704918,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.6229508196721312,
+                "high": 0.8596491228070176,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5294117647058824,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6653237237526771,
+                "high": 0.8622322696834416,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "6",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "depression",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7903225806451613,
+            "random_prevalence": 0.7903225806451613,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7096774193548387,
+            "random_prevalence": 0.7096774193548387,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7580645161290323,
+            "random_prevalence": 0.7580645161290323,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.7777777777777778,
+            "random_prevalence": 0.7777777777777778,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.746031746031746,
+            "random_prevalence": 0.746031746031746,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.567350579839429,
+              "f1": 0.7222222222222222,
+              "recall": 0.6610169491525424,
+              "specificity": 0.47368421052631576,
+              "roc_auc": 0.5700267618198038,
+              "pr_auc": 0.7970791338985219,
+              "tn": 9,
+              "fp": 10,
+              "fn": 20,
+              "tp": 39,
+              "confusion_matrix": [
+                [
+                  9,
+                  10
+                ],
+                [
+                  20,
+                  39
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.43142053091397853,
+                "high": 0.6983740601503757,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6222222222222222,
+                "high": 0.8095336481700117,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.5396825396825397,
+                "high": 0.7818181818181819,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.23809523809523808,
+                "high": 0.7,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4054059041919619,
+                "high": 0.7361139807162533,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6860287467562682,
+                "high": 0.9089643298229486,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.8613138686131386,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7564102564102564,
+              "tn": 0,
+              "fp": 19,
+              "fn": 0,
+              "tp": 59,
+              "confusion_matrix": [
+                [
+                  0,
+                  19
+                ],
+                [
+                  0,
+                  59
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.7967445225299711,
+                "high": 0.9160464376590329,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.662157403882756,
+                "high": 0.845097508125677,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.5307760927743086,
+              "f1": 0.7586206896551725,
+              "recall": 0.7457627118644068,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5307760927743086,
+              "pr_auc": 0.7679841716416204,
+              "tn": 6,
+              "fp": 13,
+              "fn": 15,
+              "tp": 44,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  15,
+                  44
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6666666666666667,
+                "high": 0.8360655737704918,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.6229508196721312,
+                "high": 0.8596491228070176,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5294117647058824,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6653237237526771,
+                "high": 0.8622322696834416,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "8",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "depression",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7903225806451613,
+            "random_prevalence": 0.7903225806451613,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7096774193548387,
+            "random_prevalence": 0.7096774193548387,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7580645161290323,
+            "random_prevalence": 0.7580645161290323,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.7777777777777778,
+            "random_prevalence": 0.7777777777777778,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.746031746031746,
+            "random_prevalence": 0.746031746031746,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.5231935771632471,
+              "f1": 0.7207207207207208,
+              "recall": 0.6779661016949152,
+              "specificity": 0.3684210526315789,
+              "roc_auc": 0.48795718108831404,
+              "pr_auc": 0.7578489351038586,
+              "tn": 7,
+              "fp": 12,
+              "fn": 19,
+              "tp": 40,
+              "confusion_matrix": [
+                [
+                  7,
+                  12
+                ],
+                [
+                  19,
+                  40
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.39349898580121706,
+                "high": 0.6583780147089032,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6168224299065421,
+                "high": 0.8103448275862069,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.5555555555555556,
+                "high": 0.8,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.15779352226720647,
+                "high": 0.6111111111111112,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.344803050397878,
+                "high": 0.6267091939619163,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6554357882165438,
+                "high": 0.8636239071692241,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.8613138686131386,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7564102564102564,
+              "tn": 0,
+              "fp": 19,
+              "fn": 0,
+              "tp": 59,
+              "confusion_matrix": [
+                [
+                  0,
+                  19
+                ],
+                [
+                  0,
+                  59
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.7967445225299711,
+                "high": 0.9160464376590329,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.662157403882756,
+                "high": 0.845097508125677,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.5307760927743086,
+              "f1": 0.7586206896551725,
+              "recall": 0.7457627118644068,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5307760927743086,
+              "pr_auc": 0.7679841716416204,
+              "tn": 6,
+              "fp": 13,
+              "fn": 15,
+              "tp": 44,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  15,
+                  44
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6666666666666667,
+                "high": 0.8360655737704918,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.6229508196721312,
+                "high": 0.8596491228070176,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5294117647058824,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6653237237526771,
+                "high": 0.8622322696834416,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "10",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "depression",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7903225806451613,
+            "random_prevalence": 0.7903225806451613,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7096774193548387,
+            "random_prevalence": 0.7096774193548387,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7580645161290323,
+            "random_prevalence": 0.7580645161290323,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.7777777777777778,
+            "random_prevalence": 0.7777777777777778,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.746031746031746,
+            "random_prevalence": 0.746031746031746,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.5691347011596788,
+              "f1": 0.6599999999999999,
+              "recall": 0.559322033898305,
+              "specificity": 0.5789473684210527,
+              "roc_auc": 0.5619982158786797,
+              "pr_auc": 0.7895451994020866,
+              "tn": 11,
+              "fp": 8,
+              "fn": 26,
+              "tp": 33,
+              "confusion_matrix": [
+                [
+                  11,
+                  8
+                ],
+                [
+                  26,
+                  33
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.43876542796897566,
+                "high": 0.7072610919037101,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.5434782608695652,
+                "high": 0.7610830172777076,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.43333333333333335,
+                "high": 0.6842348927875243,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.35,
+                "high": 0.8235933503836314,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4256622836976321,
+                "high": 0.6935627880184332,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6841837055261687,
+                "high": 0.8878267213898707,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.8613138686131386,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7564102564102564,
+              "tn": 0,
+              "fp": 19,
+              "fn": 0,
+              "tp": 59,
+              "confusion_matrix": [
+                [
+                  0,
+                  19
+                ],
+                [
+                  0,
+                  59
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.7967445225299711,
+                "high": 0.9160464376590329,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.662157403882756,
+                "high": 0.845097508125677,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.5307760927743086,
+              "f1": 0.7586206896551725,
+              "recall": 0.7457627118644068,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5307760927743086,
+              "pr_auc": 0.7679841716416204,
+              "tn": 6,
+              "fp": 13,
+              "fn": 15,
+              "tp": 44,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  15,
+                  44
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6666666666666667,
+                "high": 0.8360655737704918,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.6229508196721312,
+                "high": 0.8596491228070176,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5294117647058824,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6653237237526771,
+                "high": 0.8622322696834416,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "12",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "depression",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7903225806451613,
+            "random_prevalence": 0.7903225806451613,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7096774193548387,
+            "random_prevalence": 0.7096774193548387,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7580645161290323,
+            "random_prevalence": 0.7580645161290323,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.7777777777777778,
+            "random_prevalence": 0.7777777777777778,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.746031746031746,
+            "random_prevalence": 0.746031746031746,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.4384478144513827,
+              "f1": 0.594059405940594,
+              "recall": 0.5084745762711864,
+              "specificity": 0.3684210526315789,
+              "roc_auc": 0.44424620874219445,
+              "pr_auc": 0.7418225764058783,
+              "tn": 7,
+              "fp": 12,
+              "fn": 29,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  7,
+                  12
+                ],
+                [
+                  29,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.31255898969757395,
+                "high": 0.5751998217485706,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.477222097209721,
+                "high": 0.6972477064220183,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.3793103448275862,
+                "high": 0.6349567099567097,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.15384615384615385,
+                "high": 0.6153846153846154,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.3130184417517007,
+                "high": 0.5798988970588232,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6506826552828217,
+                "high": 0.8491943315705638,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.8613138686131386,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7564102564102564,
+              "tn": 0,
+              "fp": 19,
+              "fn": 0,
+              "tp": 59,
+              "confusion_matrix": [
+                [
+                  0,
+                  19
+                ],
+                [
+                  0,
+                  59
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.7967445225299711,
+                "high": 0.9160464376590329,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.662157403882756,
+                "high": 0.845097508125677,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.5307760927743086,
+              "f1": 0.7586206896551725,
+              "recall": 0.7457627118644068,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5307760927743086,
+              "pr_auc": 0.7679841716416204,
+              "tn": 6,
+              "fp": 13,
+              "fn": 15,
+              "tp": 44,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  15,
+                  44
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6666666666666667,
+                "high": 0.8360655737704918,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.6229508196721312,
+                "high": 0.8596491228070176,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5294117647058824,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6653237237526771,
+                "high": 0.8622322696834416,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "15",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      },
+      {
+        "feature_mode": "hybrid_v2",
+        "target": "depression",
+        "text_field": "revision_window_text",
+        "classifier": "LogisticRegression(max_iter=2000, class_weight='balanced', random_state=42)",
+        "preprocessing": "TF-IDF, SVD, LIWC/domain scalers are fit on each training fold only, matching V2 behavior.",
+        "baseline_definitions": {
+          "majority": "For each fold, predict the deterministic majority class from training-fold labels only; ties choose class 0. y_score is 0.0 or 1.0.",
+          "prevalence_random": "For each fold, draw Bernoulli labels with p equal to the training-fold positive prevalence using seed 2026 plus deterministic fold/target offsets. y_score is the sampled 0.0/1.0 label."
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7903225806451613,
+            "random_prevalence": 0.7903225806451613,
+            "majority_label": 1
+          },
+          {
+            "fold": 1,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7096774193548387,
+            "random_prevalence": 0.7096774193548387,
+            "majority_label": 1
+          },
+          {
+            "fold": 2,
+            "n_train": 62,
+            "n_test": 16,
+            "train_patients": 50,
+            "test_patients": 13,
+            "train_positive_rate": 0.7580645161290323,
+            "random_prevalence": 0.7580645161290323,
+            "majority_label": 1
+          },
+          {
+            "fold": 3,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.7777777777777778,
+            "random_prevalence": 0.7777777777777778,
+            "majority_label": 1
+          },
+          {
+            "fold": 4,
+            "n_train": 63,
+            "n_test": 15,
+            "train_patients": 51,
+            "test_patients": 12,
+            "train_positive_rate": 0.746031746031746,
+            "random_prevalence": 0.746031746031746,
+            "majority_label": 1
+          }
+        ],
+        "metrics": {
+          "model": {
+            "pooled_oof": {
+              "bacc": 0.5437109723461195,
+              "f1": 0.6185567010309277,
+              "recall": 0.5084745762711864,
+              "specificity": 0.5789473684210527,
+              "roc_auc": 0.5807314897413024,
+              "pr_auc": 0.8154855368329752,
+              "tn": 11,
+              "fp": 8,
+              "fn": 29,
+              "tp": 30,
+              "confusion_matrix": [
+                [
+                  11,
+                  8
+                ],
+                [
+                  29,
+                  30
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.404738196125908,
+                "high": 0.6787718853421586,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.5,
+                "high": 0.7234143870314084,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.3793103448275862,
+                "high": 0.6346230158730158,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.35294117647058826,
+                "high": 0.8,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.44020991461100567,
+                "high": 0.7179214498299313,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.7236475908635615,
+                "high": 0.9059927251872054,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "majority": {
+            "pooled_oof": {
+              "bacc": 0.5,
+              "f1": 0.8613138686131386,
+              "recall": 1.0,
+              "specificity": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7564102564102564,
+              "tn": 0,
+              "fp": 19,
+              "fn": 0,
+              "tp": 59,
+              "confusion_matrix": [
+                [
+                  0,
+                  19
+                ],
+                [
+                  0,
+                  59
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.7967445225299711,
+                "high": 0.9160464376590329,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 1.0,
+                "high": 1.0,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.0,
+                "high": 0.0,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.5,
+                "high": 0.5,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.662157403882756,
+                "high": 0.845097508125677,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          },
+          "prevalence_random": {
+            "pooled_oof": {
+              "bacc": 0.5307760927743086,
+              "f1": 0.7586206896551725,
+              "recall": 0.7457627118644068,
+              "specificity": 0.3157894736842105,
+              "roc_auc": 0.5307760927743086,
+              "pr_auc": 0.7679841716416204,
+              "tn": 6,
+              "fp": 13,
+              "fn": 15,
+              "tp": 44,
+              "confusion_matrix": [
+                [
+                  6,
+                  13
+                ],
+                [
+                  15,
+                  44
+                ]
+              ],
+              "n": 78,
+              "positive_rate": 0.7564102564102564
+            },
+            "patient_bootstrap_95ci": {
+              "bacc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "f1": {
+                "low": 0.6666666666666667,
+                "high": 0.8360655737704918,
+                "n_valid_bootstrap": 2000
+              },
+              "recall": {
+                "low": 0.6229508196721312,
+                "high": 0.8596491228070176,
+                "n_valid_bootstrap": 2000
+              },
+              "specificity": {
+                "low": 0.1111111111111111,
+                "high": 0.5294117647058824,
+                "n_valid_bootstrap": 2000
+              },
+              "roc_auc": {
+                "low": 0.4160704967470859,
+                "high": 0.6465212084971227,
+                "n_valid_bootstrap": 2000
+              },
+              "pr_auc": {
+                "low": 0.6653237237526771,
+                "high": 0.8622322696834416,
+                "n_valid_bootstrap": 2000
+              }
+            }
+          }
+        },
+        "window": "full_text",
+        "fixed_feature_mode_rationale": "A single common feature mode is pre-specified for all windows and both targets to avoid target/window-specific selection after inspecting window results. hybrid_v2 is the broadest main-paper V2 comparison mode because it combines TF-IDF/SVD, LIWC, and domain-rule features."
+      }
+    ]
+  }
+}
