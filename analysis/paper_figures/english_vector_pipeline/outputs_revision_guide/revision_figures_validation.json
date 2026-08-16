@@ -1,0 +1,83 @@
+{
+  "sources": {
+    "main_revision_summary": "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\emotion_model\\experiments\\mind_echo_revision_minimal\\main_v2_oof\\summary.json",
+    "window_revision_summary": "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\emotion_model\\experiments\\mind_echo_revision_minimal\\window_oof\\summary.json",
+    "plot_style": "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\plot_style.py"
+  },
+  "output_dir": "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide",
+  "cohort": {
+    "visits": 78,
+    "patients": 63,
+    "patient_records_from_dialogue_source_files": 84,
+    "dialogue_source_files": 84,
+    "visit_segments": 131,
+    "paired_scale_records": 109,
+    "patient_records_with_caregiver_labeled_turn": 63,
+    "patient_records_without_caregiver_labeled_turn": 21,
+    "patient_records_with_any_recorded_age": 35,
+    "patient_records_with_pediatric_age_0_17": 21
+  },
+  "model_protocol": {
+    "cv": "patient-grouped five-fold OOF",
+    "grouping_field": "patient_id",
+    "seed": 2026,
+    "patient_bootstrap_draws": 2000,
+    "no_caregiver_or_family_grouped_cv_claim": true
+  },
+  "figure1_text_only": true,
+  "chart_outputs": [
+    "figure3_1",
+    "figure3_2",
+    "figure3_3",
+    "figure4_1",
+    "figure4_2",
+    "figure4_3"
+  ],
+  "generated_files": [
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure1_1.md",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure1_2.csv",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_data.csv",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_data.csv",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_1.svg",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_1.pdf",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_1.png",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_2.svg",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_2.pdf",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_2.png",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_3.svg",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_3.pdf",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_3.png",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_1.svg",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_1.pdf",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_1.png",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_2.svg",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_2.pdf",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_2.png",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_3.svg",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_3.pdf",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_3.png",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure3_caption_stats.md",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\figure4_caption_stats.md",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\README.md",
+    "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\paper_figures\\english_vector_pipeline\\outputs_revision_guide\\revision_figures_validation.json"
+  ],
+  "style_checks": {
+    "svg_fonttype": "none",
+    "pdf_fonttype": 42,
+    "minimum_configured_tick_font_size_pt": 8.5,
+    "color_blind_aware_with_marker_hatch_line_encoding": true,
+    "honest_axis_range_0_to_1_for_classification_metrics": true
+  },
+  "output_validation": {
+    "required_files_present": true,
+    "required_files_nonzero": true,
+    "missing_files": [],
+    "empty_files": [],
+    "figure1_image_files": [],
+    "no_figure1_images": true,
+    "cjk_findings": [],
+    "no_cjk_in_script_docs_csv_svg_json": true,
+    "legacy_outputs_written": [],
+    "no_legacy_outputs_written": true
+  }
+}
