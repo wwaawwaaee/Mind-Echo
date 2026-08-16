@@ -25,4 +25,3 @@ Each target is evaluated separately. Every window uses the fixed 78-visit manife
 | 12 | hybrid_v2 | 0.569 | 0.660 | 0.559 | 0.579 | 0.562 | 0.790 | 11/8/26/33 |
 | 15 | hybrid_v2 | 0.438 | 0.594 | 0.508 | 0.368 | 0.444 | 0.742 | 7/12/29/30 |
 | full_text | hybrid_v2 | 0.544 | 0.619 | 0.508 | 0.579 | 0.581 | 0.815 | 11/8/29/30 |
-

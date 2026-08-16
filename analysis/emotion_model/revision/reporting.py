@@ -65,7 +65,7 @@ def write_main_markdown(path: Path, payload: dict[str, Any]) -> None:
             m = row["metrics"]["model"]["pooled_oof"]
             lines.append(metric_row(row["feature_mode"], m))
         lines.append("")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
 
 
 def write_window_markdown(path: Path, payload: dict[str, Any]) -> None:
@@ -86,7 +86,7 @@ def write_window_markdown(path: Path, payload: dict[str, Any]) -> None:
             m = row["metrics"]["model"]["pooled_oof"]
             lines.append(metric_row(row["window"], m, feature_mode=row["feature_mode"]))
         lines.append("")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
 
 
 def metric_row(label: str, metrics: dict[str, Any], feature_mode: str | None = None) -> str:

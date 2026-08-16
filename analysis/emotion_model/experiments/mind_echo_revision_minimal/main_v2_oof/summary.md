@@ -19,4 +19,3 @@ Patient-grouped 5-fold OOF predictions with fold-local V2 preprocessing and fixe
 | liwc_only | 0.566 | 0.776 | 0.763 | 0.368 | 0.590 | 0.810 | 7/12/14/45 |
 | domain_only | 0.567 | 0.722 | 0.661 | 0.474 | 0.581 | 0.810 | 9/10/20/39 |
 | hybrid_v2 | 0.544 | 0.619 | 0.508 | 0.579 | 0.581 | 0.815 | 11/8/29/30 |
-
