@@ -1,3 +1,8 @@
 pandas
-pandas openpyxl
+openpyxl
 requests
+numpy
+scipy
+matplotlib
+jieba
+scikit-learn

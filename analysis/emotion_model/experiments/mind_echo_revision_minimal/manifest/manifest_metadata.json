@@ -1,0 +1,23 @@
+{
+  "source_data": "D:\\vscode-project\\git-project\\Mind-Echo\\analysis\\emotion_model\\experiments\\with_caregiver_label_comparison\\data\\all_data.json",
+  "sample_count": 78,
+  "patient_count": 63,
+  "grouping_field": "patient_id",
+  "grouping_limitation": "patient_id is the only available grouping field; no structured caregiver_id or family_id is present in the source rows.",
+  "fold_strategy": "sklearn.model_selection.GroupKFold(n_splits=5) on patient_id, using source row order",
+  "seed": 2026,
+  "counts_by_fold": {
+    "0": 16,
+    "1": 16,
+    "2": 16,
+    "3": 15,
+    "4": 15
+  },
+  "patients_by_fold": {
+    "0": 13,
+    "1": 13,
+    "2": 13,
+    "3": 12,
+    "4": 12
+  }
+}
