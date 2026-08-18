@@ -496,39 +496,67 @@ def plot_recall_specificity(rows: Sequence[Dict[str, Any]], output_dir: Path) ->
 def write_figure1_outputs(output_dir: Path) -> List[Path]:
     rows = [
         {
-            "section": "Dialogue source",
-            "measure": "Patient records from dialogue source files",
+            "section": "Full descriptive dataset",
+            "measure": "Patient records",
             "count": 84,
-            "denominator": 84,
-            "note": "One patient record per dialogue source file.",
+            "denominator": "",
+            "note": "Patient record is the unit for cohort and demographic descriptions.",
         },
         {
-            "section": "Dialogue source",
+            "section": "Full descriptive dataset",
             "measure": "Visit segments",
             "count": 131,
-            "denominator": "",
-            "note": "Visit-level dialogue segments across patient records.",
+            "denominator": 84,
+            "note": "Visits are nested within patient records.",
+        },
+        {
+            "section": "Full descriptive dataset",
+            "measure": "Role-labeled dialogue turns",
+            "count": 5531,
+            "denominator": 131,
+            "note": "Turns are model inputs or features, not independent analysis samples.",
+        },
+        {
+            "section": "Full descriptive dataset",
+            "measure": "Doctor-labeled turns",
+            "count": 2824,
+            "denominator": 5531,
+            "note": "Role-labeled turn count.",
+        },
+        {
+            "section": "Full descriptive dataset",
+            "measure": "Caregiver-labeled turns",
+            "count": 1889,
+            "denominator": 5531,
+            "note": "Role-labeled turns do not provide a caregiver or family identifier.",
+        },
+        {
+            "section": "Full descriptive dataset",
+            "measure": "Patient-labeled turns",
+            "count": 818,
+            "denominator": 5531,
+            "note": "Role-labeled turn count.",
         },
         {
             "section": "Clinical scales",
             "measure": "Paired GAD-7/PHQ-9 scale records",
             "count": 109,
-            "denominator": "",
-            "note": "Scale respondent identity cannot be independently verified.",
+            "denominator": 84,
+            "note": "A scale record is a measurement unit, not a patient count; respondent identity cannot be independently verified.",
         },
         {
             "section": "Caregiver turns",
             "measure": "Patient records with at least one caregiver-labeled turn",
             "count": 63,
             "denominator": 84,
-            "note": "Caregiver status is role-derived from dialogue turns.",
+            "note": "Descriptive role-derived subset; distinct from the 63 patients in the ML cohort.",
         },
         {
             "section": "Caregiver turns",
             "measure": "Patient records without caregiver-labeled turns",
             "count": 21,
             "denominator": 84,
-            "note": "No caregiver-labeled dialogue turn was present.",
+            "note": "Descriptive patient records with no caregiver-labeled dialogue turn.",
         },
         {
             "section": "Age availability",
@@ -546,17 +574,52 @@ def write_figure1_outputs(output_dir: Path) -> List[Path]:
         },
         {
             "section": "Revision ML cohort",
-            "measure": "Visit-level records used in revision ML analyses",
+            "measure": "Curated visit-level prediction records",
             "count": 78,
-            "denominator": "",
-            "note": "Patient-grouped five-fold OOF analyses.",
+            "denominator": 131,
+            "note": "The visit is the primary ML analysis and prediction unit.",
         },
         {
             "section": "Revision ML cohort",
-            "measure": "Patients used in revision ML analyses",
+            "measure": "Patients represented in the curated ML cohort",
             "count": 63,
-            "denominator": "",
-            "note": "Patient identifier is the grouping field.",
+            "denominator": 84,
+            "note": "patient_id is the cross-validation grouping and bootstrap resampling unit.",
+        },
+        {
+            "section": "Revision ML targets",
+            "measure": "Anxiety-positive visits (GAD-7 >= 10)",
+            "count": 50,
+            "denominator": 78,
+            "note": "The remaining 28 visits are anxiety-negative.",
+        },
+        {
+            "section": "Revision ML targets",
+            "measure": "Depression-positive visits (PHQ-9 >= 10)",
+            "count": 59,
+            "denominator": 78,
+            "note": "The remaining 19 visits are depression-negative.",
+        },
+        {
+            "section": "Cross-validation",
+            "measure": "Test visits by fold",
+            "count": "16/16/16/15/15",
+            "denominator": 78,
+            "note": "Each visit receives exactly one out-of-fold prediction.",
+        },
+        {
+            "section": "Cross-validation",
+            "measure": "Test patients by fold",
+            "count": "13/13/13/12/12",
+            "denominator": 63,
+            "note": "All visits from one patient remain in the same fold.",
+        },
+        {
+            "section": "Uncertainty estimation",
+            "measure": "Patient-level bootstrap draws",
+            "count": 2000,
+            "denominator": 63,
+            "note": "Patients, rather than visits or turns, are resampled for 95% confidence intervals.",
         },
     ]
     csv_path = write_csv(output_dir / "figure1_2.csv", rows, ["section", "measure", "count", "denominator", "note"])
@@ -564,18 +627,41 @@ def write_figure1_outputs(output_dir: Path) -> List[Path]:
     md_rows = [[str(row["section"]), str(row["measure"]), str(row["count"]), str(row["denominator"]), str(row["note"])] for row in rows]
     text = "# Figure 1. Mind-Echo revision sample structure\n\n"
     text += (
-        "Figure 1 is represented as text and tables only. The data structure contains "
-        "84 patient records from 84 dialogue source files, 131 visit segments, and "
-        "109 paired GAD-7/PHQ-9 scale records. Among the 84 patient records, 63 have "
-        "at least one caregiver-labeled dialogue turn and 21 do not. Recorded age is "
-        "available for 35 patient records, including 21 with pediatric ages from 0 "
-        "through 17 years. The revision machine-learning analyses use 78 visit-level "
-        "records from 63 patients with patient-grouped five-fold OOF predictions.\n\n"
+        "Figure 1 is represented as text and tables only. The full descriptive dataset "
+        "contains 84 patient records, 131 visit segments, 109 paired GAD-7/PHQ-9 scale "
+        "records, and 5,531 role-labeled dialogue turns: 2,824 doctor turns, 1,889 "
+        "caregiver turns, and 818 patient turns. Patient record is the unit for cohort "
+        "and demographic descriptions; a paired scale record is a measurement unit; "
+        "and dialogue turns are model inputs or features rather than independent analysis "
+        "samples. Among the 84 descriptive patient records, 63 have at least one "
+        "caregiver-labeled dialogue turn and 21 do not. Recorded age is available for "
+        "35 patient records, including 21 with pediatric ages from 0 through 17 years.\n\n"
+    )
+    text += (
+        "The revision machine-learning cohort is a distinct curated subset containing "
+        "78 visit-level prediction records nested within 63 patients. The visit is the "
+        "primary machine-learning analysis and prediction unit, whereas patient_id is "
+        "the grouping and resampling unit. The two counts of 63 describe different "
+        "subsets: 63 descriptive patient records with caregiver-labeled turns and 63 "
+        "patients represented in the curated machine-learning cohort. The available "
+        "aggregate sources do not enumerate a single record-level exclusion reason for "
+        "each difference between the full descriptive dataset and the ML cohort.\n\n"
+    )
+    text += (
+        "Five-fold GroupKFold cross-validation (CV) is performed using patient_id groups. "
+        "The five test folds contain 16/16/16/15/15 visits from 13/13/13/12/12 patients. "
+        "All visits from a patient remain in one fold, each of the 78 visits receives one "
+        "out-of-fold (OOF) prediction, and performance metrics are computed by pooling the "
+        "78 OOF predictions. Ninety-five percent confidence intervals use 2,000 "
+        "patient-level bootstrap draws. Anxiety is labeled positive at GAD-7 >= 10 "
+        "(50 positive and 28 negative visits), and depression is labeled positive at "
+        "PHQ-9 >= 10 (59 positive and 19 negative visits).\n\n"
     )
     text += (
         "The source structure does not contain caregiver_id, family_id, recording_id, "
         "an EMR/MRN field, or a standalone scale_id. Caregiver status is derived from "
-        "dialogue turn roles, and scale respondent identity cannot be independently verified.\n\n"
+        "dialogue turn roles, no caregiver- or family-grouped CV is claimed, and scale "
+        "respondent identity cannot be independently verified.\n\n"
     )
     text += markdown_table(["Section", "Measure", "Count", "Denominator", "Note"], md_rows)
     text += "\n"
@@ -843,20 +929,35 @@ def build_revision_outputs(output_dir: Path) -> Dict[str, Any]:
         "cohort": {
             "visits": 78,
             "patients": 63,
-            "patient_records_from_dialogue_source_files": 84,
-            "dialogue_source_files": 84,
+            "descriptive_patient_records": 84,
             "visit_segments": 131,
             "paired_scale_records": 109,
+            "dialogue_turns_total": 5531,
+            "doctor_labeled_turns": 2824,
+            "caregiver_labeled_turns": 1889,
+            "patient_labeled_turns": 818,
             "patient_records_with_caregiver_labeled_turn": 63,
             "patient_records_without_caregiver_labeled_turn": 21,
             "patient_records_with_any_recorded_age": 35,
             "patient_records_with_pediatric_age_0_17": 21,
         },
+        "target_labels": {
+            "anxiety_gad7_ge_10": {"positive_visits": 50, "negative_visits": 28},
+            "depression_phq9_ge_10": {"positive_visits": 59, "negative_visits": 19},
+        },
         "model_protocol": {
-            "cv": "patient-grouped five-fold OOF",
+            "cross_validation": "patient-grouped five-fold GroupKFold cross-validation (CV)",
+            "prediction_reporting": "pooled out-of-fold (OOF) predictions",
             "grouping_field": "patient_id",
+            "analysis_and_prediction_unit": "visit",
+            "grouping_and_bootstrap_unit": "patient_id",
+            "test_visit_counts_by_fold": [16, 16, 16, 15, 15],
+            "test_patient_counts_by_fold": [13, 13, 13, 12, 12],
+            "pooled_oof_predictions": 78,
             "seed": 2026,
             "patient_bootstrap_draws": 2000,
+            "dialogue_turns_are_independent_samples": False,
+            "paired_scale_record_is_a_patient_count": False,
             "no_caregiver_or_family_grouped_cv_claim": True,
         },
         "figure1_text_only": True,

@@ -8,20 +8,53 @@
   "cohort": {
     "visits": 78,
     "patients": 63,
-    "patient_records_from_dialogue_source_files": 84,
-    "dialogue_source_files": 84,
+    "descriptive_patient_records": 84,
     "visit_segments": 131,
     "paired_scale_records": 109,
+    "dialogue_turns_total": 5531,
+    "doctor_labeled_turns": 2824,
+    "caregiver_labeled_turns": 1889,
+    "patient_labeled_turns": 818,
     "patient_records_with_caregiver_labeled_turn": 63,
     "patient_records_without_caregiver_labeled_turn": 21,
     "patient_records_with_any_recorded_age": 35,
     "patient_records_with_pediatric_age_0_17": 21
   },
+  "target_labels": {
+    "anxiety_gad7_ge_10": {
+      "positive_visits": 50,
+      "negative_visits": 28
+    },
+    "depression_phq9_ge_10": {
+      "positive_visits": 59,
+      "negative_visits": 19
+    }
+  },
   "model_protocol": {
-    "cv": "patient-grouped five-fold OOF",
+    "cross_validation": "patient-grouped five-fold GroupKFold cross-validation (CV)",
+    "prediction_reporting": "pooled out-of-fold (OOF) predictions",
     "grouping_field": "patient_id",
+    "analysis_and_prediction_unit": "visit",
+    "grouping_and_bootstrap_unit": "patient_id",
+    "test_visit_counts_by_fold": [
+      16,
+      16,
+      16,
+      15,
+      15
+    ],
+    "test_patient_counts_by_fold": [
+      13,
+      13,
+      13,
+      12,
+      12
+    ],
+    "pooled_oof_predictions": 78,
     "seed": 2026,
     "patient_bootstrap_draws": 2000,
+    "dialogue_turns_are_independent_samples": false,
+    "paired_scale_record_is_a_patient_count": false,
     "no_caregiver_or_family_grouped_cv_claim": true
   },
   "figure1_text_only": true,
